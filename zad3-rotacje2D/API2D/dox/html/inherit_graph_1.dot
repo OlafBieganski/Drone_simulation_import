@@ -1,0 +1,7 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="drawNS::Point2D",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classdraw_n_s_1_1_point2_d.html",tooltip="Point in 2D Class represents point in 2D. "];
+}

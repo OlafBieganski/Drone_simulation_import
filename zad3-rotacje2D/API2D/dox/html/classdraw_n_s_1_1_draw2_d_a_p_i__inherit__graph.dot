@@ -1,0 +1,8 @@
+digraph "drawNS::Draw2DAPI"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="drawNS::Draw2DAPI",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="drawNS::APIGnuPlot2D",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classdraw_n_s_1_1_a_p_i_gnu_plot2_d.html",tooltip="Implementation drawing 2D class using gnuplot Class implements proxy between gnuplot and C++ code..."];
+}
