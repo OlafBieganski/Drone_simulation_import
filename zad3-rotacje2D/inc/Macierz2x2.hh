@@ -18,15 +18,6 @@ class Macierz2x2 {
 };
 
 
-/*
- * To przeciazenie trzeba opisac. Co ono robi. Jaki format
- * danych akceptuje. Jakie jest znaczenie parametrow itd.
- * Szczegoly dotyczace zalecen realizacji opisow mozna
- * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
- *
- * Przeciążenie to może być użyteczne w trakcie debugowania programu.
- */
 std::ostream& operator << (std::ostream &Strm, const Macierz2x2 &Mac);
 
 #endif

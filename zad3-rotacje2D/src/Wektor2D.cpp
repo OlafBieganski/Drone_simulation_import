@@ -1,6 +1,8 @@
 #include "../inc/Wektor2D.hh"
 #include <iomanip>
 
+#define EPSILON 0.000001
+
 Wektor2D  Wektor2D::operator + (const Wektor2D & arg2) const{
     Wektor2D wynik;
     wynik[0]=xy[0]+arg2[0];
@@ -40,3 +42,6 @@ drawNS::Point2D konwertuj(Wektor2D arg){
     return drawNS::Point2D(arg[0], arg[1]);
 }
 
+bool Wektor2D::operator == (const Wektor2D & arg2) const{
+    return (abs(arg2[0]-this->xy[0])<EPSILON && abs(arg2[1]==this->xy[1])<EPSILON);
+}

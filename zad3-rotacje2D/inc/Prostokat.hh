@@ -2,33 +2,27 @@
 #define PROSTOKAT_HH
 
 #include <iostream>
+#include <vector>
+#include"../inc/Wektor2D.hh"
+#include "../API2D/source/Dr2D_gnuplot_api.hh"
 
-
-/*
- *  Tutaj trzeba opisac klase. Jakie pojecie modeluje ta klasa
- *  i jakie ma glowne cechy.
- */
 class Prostokat {
-  /*
-   *  Tutaj trzeba wstawic definicje odpowiednich pol i metod prywatnych
-   */
+  private:
+
+  int id_rysynku;
+  std::vector<Wektor2D> punkty;
+
   public:
-  /*
-   *  Tutaj trzeba wstawic definicje odpowiednich metod publicznych
-   */    
+  Prostokat rotacja(double kat_w_deg) const;
+  Prostokat translacja(Wektor2D wek);
+  const Wektor2D & operator [] (unsigned int ind) const;
+  void rysuj(drawNS::Draw2DAPI *rysownik);
+  Prostokat(Wektor2D p1, Wektor2D p2, Wektor2D p3, Wektor2D p4);
+  Prostokat();
 };
 
 
-/*
- * To przeciazenie trzeba opisac. Co ono robi. Jaki format
- * danych akceptuje. Jakie jest znaczenie parametrow itd.
- * Szczegoly dotyczace zalecen realizacji opisow mozna
- * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
- */
-std::ostream& operator << ( std::ostream       &Strm, 
-                            const Prostokat    &Pr
-                          );
+std::ostream & operator << ( std::ostream &Strm, const Prostokat &Pr);
 
 
 #endif

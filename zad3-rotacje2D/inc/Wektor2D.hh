@@ -12,11 +12,12 @@ class Wektor2D {
   public:
   Wektor2D() {xy.push_back(0.0); xy.push_back(0.0);};
   Wektor2D(double _x, double _y) {xy.push_back(_x); xy.push_back(_y);};
-  Wektor2D  operator + (const Wektor2D & arg2) const;
-  Wektor2D  operator - (const Wektor2D & arg2) const;
-  double  operator * (const Wektor2D & arg2) const;
+  Wektor2D operator + (const Wektor2D & arg2) const;
+  Wektor2D operator - (const Wektor2D & arg2) const;
+  double operator * (const Wektor2D & arg2) const;
   const double & operator [] (int ind) const;
   double & operator [] (int ind);
+  bool operator == (const Wektor2D & arg2) const;
 };
 
 drawNS::Point2D konwertuj(Wektor2D arg);
