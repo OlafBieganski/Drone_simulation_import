@@ -16,7 +16,7 @@ class Prostokat {
   Prostokat rotacja(double kat_w_deg) const;
   Prostokat translacja(Wektor2D wek);
   const Wektor2D & operator [] (unsigned int ind) const;
-  void rysuj(drawNS::Draw2DAPI *rysownik);
+  void rysuj(std::shared_ptr<drawNS::Draw2DAPI> rysownik);
   Prostokat(Wektor2D p1, Wektor2D p2, Wektor2D p3, Wektor2D p4);
   Prostokat();
 };
