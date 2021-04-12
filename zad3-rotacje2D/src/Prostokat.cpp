@@ -25,11 +25,11 @@ Prostokat Prostokat::translacja(Wektor2D wek){
 
 const Wektor2D & Prostokat::operator [] (unsigned int ind) const{
     if(ind<=3) return punkty[ind];
-    std::cerr<<"Blad indektowania obiekt 'Prostokat'.";
+    std::cerr<<"Blad indektowania obiekt 'Prostokat'."<<std::endl;
     exit(1);
 }
 
-void Prostokat::rysuj(drawNS::Draw2DAPI *rysownik){
+void Prostokat::rysuj(std::shared_ptr<drawNS::Draw2DAPI> rysownik){
     std::vector<Point2D> wspolrzede;
     for(int i=0;i<3;i++){
         wspolrzede.push_back(konwertuj(punkty[i]));
@@ -41,7 +41,7 @@ Prostokat::Prostokat(Wektor2D p1, Wektor2D p2, Wektor2D p3, Wektor2D p4){
     if( (p2-p1==p4-p3) && (p3-p2==p1-p4) && (p2-p1)*(p3-p2)==0 && (p4-p3)*(p1-p4)==0){
         punkty[0]=p1; punkty[1]=p2; punkty[2]=p3; punkty[3]=p4;
     }
-    std::cerr<<"Bledna inicjalizacja obiektu 'Prostokat'.";
+    std::cerr<<"Bledna inicjalizacja obiektu 'Prostokat'."<<std::endl;
     exit(1);
 }
 
