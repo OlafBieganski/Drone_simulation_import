@@ -18,7 +18,7 @@ int main(){
     Macierz2x2 matrix3(30.0);
     matrix2.setAngle(10.0);
     matrix1=matrix2*matrix3;
-    std::cout<<matrix1<<' '<<matrix2<<' '<<matrix3<<std::endl;
+    std::cout<<matrix1<<std::endl<<matrix2<<std::endl<<matrix3<<std::endl;
     vector1=matrix3*vector2;
     std::cout<<vector1<<std::endl;
 

@@ -1,21 +1,21 @@
 #include "../inc/Wektor2D.hh"
 #include <iomanip>
 
-const Wektor2D  Wektor2D::operator + (const Wektor2D & arg2) const{
+Wektor2D  Wektor2D::operator + (const Wektor2D & arg2) const{
     Wektor2D wynik;
     wynik[0]=xy[0]+arg2[0];
     wynik[1]=xy[1]+arg2[1];
     return wynik;
 }
 
-const Wektor2D  Wektor2D::operator - (const Wektor2D & arg2) const{
+Wektor2D  Wektor2D::operator - (const Wektor2D & arg2) const{
     Wektor2D wynik;
     wynik[0]=xy[0]-arg2[0];
     wynik[1]=xy[1]-arg2[1];
     return wynik;
 }
 
-const double  Wektor2D::operator * (const Wektor2D & arg2) const{
+double  Wektor2D::operator * (const Wektor2D & arg2) const{
     return xy[0]*arg2[0]+xy[1]*arg2[1];
 }
 

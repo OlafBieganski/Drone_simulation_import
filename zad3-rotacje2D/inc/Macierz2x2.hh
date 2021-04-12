@@ -13,8 +13,8 @@ class Macierz2x2 {
   Macierz2x2(double _kat) {kat=_kat;}
   void setAngle(double _kat) {kat=_kat;};
   const double & getAngle() const {return kat;};
-  const Macierz2x2  operator * (const Macierz2x2 & arg2) const;
-  const Wektor2D  operator * (const Wektor2D & wektor) const;
+  Macierz2x2  operator * (const Macierz2x2 & arg2) const;
+  Wektor2D  operator * (const Wektor2D & wektor) const;
 };
 
 
