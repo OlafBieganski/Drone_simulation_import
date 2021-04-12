@@ -9,7 +9,7 @@ using drawNS::APIGnuPlot2D;
 Prostokat Prostokat::rotacja(double kat_w_deg) const{
     Macierz2x2 matrix(kat_w_deg);
     Prostokat nowy;
-    for(int i=0;i<3;i++){
+    for(int i=0;i<4;i++){
     nowy.punkty[i]=matrix*this->punkty[i];
     }
     return nowy;
@@ -17,7 +17,8 @@ Prostokat Prostokat::rotacja(double kat_w_deg) const{
 
 Prostokat Prostokat::translacja(Wektor2D wek){
     Prostokat nowy;
-    for(int i=0;i<3;i++){
+    Wektor2D tmp;
+    for(int i=0;i<4;i++){
     nowy.punkty[i]=this->punkty[i]+wek;
     }
     return nowy;
@@ -25,27 +26,41 @@ Prostokat Prostokat::translacja(Wektor2D wek){
 
 const Wektor2D & Prostokat::operator [] (unsigned int ind) const{
     if(ind<=3) return punkty[ind];
-    std::cerr<<"Blad indektowania obiekt 'Prostokat'."<<std::endl;
+    std::cerr<<"Blad indeksowania obiekt 'Prostokat'."<<std::endl;
     exit(1);
 }
 
 void Prostokat::rysuj(std::shared_ptr<drawNS::Draw2DAPI> rysownik){
     std::vector<Point2D> wspolrzede;
-    for(int i=0;i<3;i++){
+    for(int i=0;i<4;i++){
         wspolrzede.push_back(konwertuj(punkty[i]));
     }
+    wspolrzede.push_back(konwertuj(punkty[0]));
     id_rysynku=rysownik->draw_polygonal_chain(wspolrzede, "red");
 }
 
 Prostokat::Prostokat(Wektor2D p1, Wektor2D p2, Wektor2D p3, Wektor2D p4){
-    if( (p2-p1==p4-p3) && (p3-p2==p1-p4) && (p2-p1)*(p3-p2)==0 && (p4-p3)*(p1-p4)==0){
-        punkty[0]=p1; punkty[1]=p2; punkty[2]=p3; punkty[3]=p4;
-    }
+    Wektor2D bok1, bok2, bok3, bok4;
+    bok1=p2-p1;
+    bok2=p3-p2;
+    bok3=p3-p4;
+    bok4=p4-p1;
+    std::cout<<bok1<<std::endl;
+    std::cout<<bok2<<std::endl;
+    std::cout<<bok3<<std::endl;
+    std::cout<<bok4<<std::endl;
+    if( (bok1==bok3) && (bok2==bok4) && bok1*bok2==0 && bok3*bok4==0){
+        punkty.push_back(p1);
+        punkty.push_back(p2);
+        punkty.push_back(p3);
+        punkty.push_back(p4);
+    }else{
     std::cerr<<"Bledna inicjalizacja obiektu 'Prostokat'."<<std::endl;
     exit(1);
+    }
 }
 
 Prostokat::Prostokat(){
     Wektor2D w1;
-    for(int i=0;i<3;i++) punkty[i]=w1;
+    for(int i=0;i<4;i++) punkty.push_back(w1);
 }

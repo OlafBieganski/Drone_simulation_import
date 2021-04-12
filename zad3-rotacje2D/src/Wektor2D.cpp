@@ -43,5 +43,5 @@ drawNS::Point2D konwertuj(Wektor2D arg){
 }
 
 bool Wektor2D::operator == (const Wektor2D & arg2) const{
-    return (abs(arg2[0]-this->xy[0])<EPSILON && abs(arg2[1]==this->xy[1])<EPSILON);
+    return (abs(arg2[0]-xy[0])<EPSILON && abs(arg2[1]-xy[1])<EPSILON);
 }
