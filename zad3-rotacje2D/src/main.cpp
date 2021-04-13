@@ -62,7 +62,7 @@ int main(){
   porownajBoki(rectangle);
   Menu();
 
-  do{
+  while(1){
     cout<<endl<<"Twoj wybor? (m - menu) > ";
     cin>>wybor;
     cout<<endl;
@@ -110,5 +110,5 @@ int main(){
         cout<<"Nierozpoznana opcja."<<endl;
         break;
     }
-  }while(1);
+  }
 }
