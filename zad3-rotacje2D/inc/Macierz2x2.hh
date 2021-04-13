@@ -7,12 +7,12 @@
 
 class Macierz2x2 {
   private:
-  double kat;
+  double katRad; // w radianach 
   public:
-  Macierz2x2() {kat=0.0;};
-  Macierz2x2(double _kat) {kat=_kat;}
-  void setAngle(double _kat) {kat=_kat;};
-  const double & getAngle() const {return kat;};
+  Macierz2x2() {katRad=0.0;};
+  Macierz2x2(double _katRad) {katRad=_katRad;}
+  void setAngle(double _katRad) {katRad=_katRad;};
+  const double & getAngle() const {return katRad;};
   Macierz2x2  operator * (const Macierz2x2 & arg2) const;
   Wektor2D  operator * (const Wektor2D & wektor) const;
 };

@@ -45,3 +45,29 @@ drawNS::Point2D konwertuj(Wektor2D arg){
 bool Wektor2D::operator == (const Wektor2D & arg2) const{
     return (abs(arg2[0]-xy[0])<EPSILON && abs(arg2[1]-xy[1])<EPSILON);
 }
+
+std::istream& operator >> (std::istream &Strm, Wektor2D &Wek){
+    double x, y;
+    char znak;
+
+    Strm>>znak;
+    if(znak!='('){
+        Strm.setstate(std::ios::failbit);
+        return Strm;
+    }
+    Strm>>x;
+    Wek[0]=x;
+    Strm>>znak;
+    if(znak!=','){
+        Strm.setstate(std::ios::failbit);
+        return Strm;
+    }
+    Strm>>y;
+    Wek[1]=y;
+    Strm>>znak;
+    if(znak!=')'){
+        Strm.setstate(std::ios::failbit);
+        return Strm;
+    }
+    return Strm;
+}

@@ -4,6 +4,9 @@
 #include "../API2D/source/Dr2D_gnuplot_api.hh"
 
 using drawNS::APIGnuPlot2D;
+using std::cout;
+using std::cin;
+using std::endl;
 
 void wait4key() {
   do {
@@ -11,37 +14,101 @@ void wait4key() {
   } while(std::cin.get() != '\n');
 }
 
+void porownajBoki(const Prostokat & rectangle){
+  Wektor2D bok1, bok2, bok3, bok4;
+
+  bok1=rectangle[1]-rectangle[0];
+  bok2=rectangle[2]-rectangle[1];
+  bok3=rectangle[2]-rectangle[3];
+  bok4=rectangle[3]-rectangle[0];
+
+  if(bok1==bok3){
+    cout<<endl<<"Dluzsze przeciwlegle boki sa rownej dlugosci."<<endl;
+  }
+  else{
+    cout<<"Dluzsze przeciwlegle boki nie sa rownej dlugosci."<<endl;
+  }
+
+  cout<<endl<<"Dlugosc pierwszego boku:\t"<<bok1.modul()<<endl;
+  cout<<"Dlugosc drugiego boku:\t"<<bok3.modul()<<endl<<endl;
+
+  if(bok2==bok4){
+    cout<<"Krotsze przeciwlegle boki sa rownej dlugosci."<<endl;
+  }
+  else{
+    cout<<"Krotsze przeciwlegle boki nie sa rownej dlugosci."<<endl;
+  }
+  
+  cout<<endl<<"Dlugosc pierwszego boku:\t"<<bok2.modul()<<endl;
+  cout<<"Dlugosc drugiego boku:\t"<<bok4.modul()<<endl<<endl;
+}
+
+void Menu(){
+  cout<<"o - obrot prostokata o zadany kat"<<endl;
+  cout<<"p - przesuniecie prostokata o zadany wektor"<<endl;
+  cout<<"w - wyswietlenie wspolrzednych wierzcholkow"<<endl;
+  cout<<"m - wyswietl menu"<<endl;
+  cout<<"k - koniec dzialania programu"<<endl;
+}
+
 int main(){
-    //Wektor2D vector1(4,1), vector3(4,5), vector4(6,3);
-    //Wektor2D vector2(2.0, 3.0);
-    Wektor2D vector1(1,1), vector3(3,4), vector4(3,1);
-    Wektor2D vector2(1,4);
-    
-    Prostokat rectangle(vector1,vector2,vector3,vector4);
-    Prostokat rotated;
-    std::shared_ptr<drawNS::Draw2DAPI> rysownik(new APIGnuPlot2D(-10,10,-10,10,0));
-    rectangle.rysuj(rysownik);
-    
-    wait4key();
-    rotated=rectangle.rotacja(3.14);
-    rotated.rysuj(rysownik);
+  Wektor2D w1(1,3), w2(4,6), w3(6,4), w4(3,1), vector;
+  Prostokat rectangle(w1,w2,w3,w4), newRec;
+  char wybor;
+  double katDeg;
+  int obroty;
+  drawNS::Draw2DAPI *rysownik=new APIGnuPlot2D(-15,15,-15,15,0);
 
-    std::cout<<vector1<<std::endl<<vector3<<std::endl;
+  porownajBoki(rectangle);
+  Menu();
+  do{
+    cout<<endl<<"Twoj wybor? (m - menu) > ";
+    cin>>wybor;
+    cout<<endl;
 
-    vector1[0]=vector2[1]; vector1[1]=1.0;
-    double wynik=vector1*vector2;
-
-    std::cout<<vector1<<std::endl<<vector2<<std::endl;
-
-    std::cout<<wynik<<std::endl;
-
-    Macierz2x2 matrix1, matrix2;
-    Macierz2x2 matrix3(30.0);
-    matrix2.setAngle(10.0);
-    matrix1=matrix2*matrix3;
-    std::cout<<matrix1<<std::endl<<matrix2<<std::endl<<matrix3<<std::endl;
-    vector1=matrix3*vector2;
-    std::cout<<vector1<<std::endl;
-
-    return 0;
+    switch(wybor){
+      case 'o':
+        cout<<"Podaj wartosc kata obrotu w stopniach"<<endl;
+        cin>>katDeg;
+        cout<<endl<<"Ile razy operacja obrotu ma byc powtorzona?"<<endl;
+        cin>>obroty;
+        cout<<endl;
+        newRec=rectangle.rotacja(katDeg*obroty);
+        /*for(int i=0;i<obroty;i++){
+          newRec=newRec.rotacja(katDeg);
+        }*/
+        newRec.rysuj(rysownik);
+        porownajBoki(newRec);
+        break;
+      case 'p':
+        cout<<"Wprowadz wspolrzedne wektora translacji w postaci (x,y)";
+        cout<<endl;
+        cin>>vector;
+        while(!cin.good()){
+          cin.clear();
+          cin.ignore(1000, '\n');
+          cout<<"Zly format. Wprowadz dane ponownie."<<endl;
+          cin>>vector;
+        }
+        rectangle=rectangle.translacja(vector);
+        rectangle.rysuj(rysownik);
+        porownajBoki(rectangle);
+        break;
+      case 'w':
+        cout<<rectangle[0]<<endl;
+        cout<<rectangle[1]<<endl;
+        cout<<rectangle[2]<<endl;
+        cout<<rectangle[3]<<endl;
+        break;
+      case 'm':
+        Menu();
+        break;
+      case 'k':
+          delete rysownik;
+          return 0;
+      default:
+        cout<<endl<<"Nierozpoznana opcja."<<endl;
+        break;
+    }
+  }while(1);
 }

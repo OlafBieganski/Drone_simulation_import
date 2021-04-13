@@ -7,7 +7,7 @@ using drawNS::Point2D;
 using drawNS::APIGnuPlot2D;
 
 Prostokat Prostokat::rotacja(double kat_w_deg) const{
-    Macierz2x2 matrix(kat_w_deg);
+    Macierz2x2 matrix((kat_w_deg*3.14)/180);
     Prostokat nowy;
     for(int i=0;i<4;i++){
     nowy.punkty[i]=matrix*this->punkty[i];
@@ -30,7 +30,7 @@ const Wektor2D & Prostokat::operator [] (unsigned int ind) const{
     exit(1);
 }
 
-void Prostokat::rysuj(std::shared_ptr<drawNS::Draw2DAPI> rysownik){
+void Prostokat::rysuj(drawNS::Draw2DAPI *rysownik){
     std::vector<Point2D> wspolrzede;
     for(int i=0;i<4;i++){
         wspolrzede.push_back(konwertuj(punkty[i]));
@@ -45,10 +45,10 @@ Prostokat::Prostokat(Wektor2D p1, Wektor2D p2, Wektor2D p3, Wektor2D p4){
     bok2=p3-p2;
     bok3=p3-p4;
     bok4=p4-p1;
-    std::cout<<bok1<<std::endl;
-    std::cout<<bok2<<std::endl;
-    std::cout<<bok3<<std::endl;
-    std::cout<<bok4<<std::endl;
+    //std::cout<<bok1<<std::endl;
+    //std::cout<<bok2<<std::endl;
+    //std::cout<<bok3<<std::endl;
+    //std::cout<<bok4<<std::endl;
     if( (bok1==bok3) && (bok2==bok4) && bok1*bok2==0 && bok3*bok4==0){
         punkty.push_back(p1);
         punkty.push_back(p2);

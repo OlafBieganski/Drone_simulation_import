@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "../API2D/source/Dr2D_gnuplot_api.hh"
+#include <cmath>
 
 
 class Wektor2D {
@@ -18,12 +19,13 @@ class Wektor2D {
   const double & operator [] (int ind) const;
   double & operator [] (int ind);
   bool operator == (const Wektor2D & arg2) const;
+  double modul() const {return sqrt(pow(xy[0], 2)+pow(xy[1], 2));}
 };
 
 drawNS::Point2D konwertuj(Wektor2D arg);
 
 
-// std::istream& operator >> (std::istream &Strm, Wektor2D &Wek);
+std::istream& operator >> (std::istream &Strm, Wektor2D &Wek);
 
 
 std::ostream& operator << (std::ostream &Strm, const Wektor2D &Wek);
