@@ -29,8 +29,8 @@ void porownajBoki(const Prostokat & rectangle){
     cout<<"Dluzsze przeciwlegle boki nie sa rownej dlugosci."<<endl;
   }
 
-  cout<<endl<<"Dlugosc pierwszego boku:\t"<<bok1.modul()<<endl;
-  cout<<"Dlugosc drugiego boku:\t"<<bok3.modul()<<endl<<endl;
+  cout<<endl<<"Dlugosc pierwszego boku: "<<bok1.modul()<<endl;
+  cout<<"Dlugosc drugiego boku: "<<bok3.modul()<<endl<<endl;
 
   if(bok2==bok4){
     cout<<"Krotsze przeciwlegle boki sa rownej dlugosci."<<endl;
@@ -39,8 +39,8 @@ void porownajBoki(const Prostokat & rectangle){
     cout<<"Krotsze przeciwlegle boki nie sa rownej dlugosci."<<endl;
   }
   
-  cout<<endl<<"Dlugosc pierwszego boku:\t"<<bok2.modul()<<endl;
-  cout<<"Dlugosc drugiego boku:\t"<<bok4.modul()<<endl<<endl;
+  cout<<endl<<"Dlugosc pierwszego boku: "<<bok2.modul()<<endl;
+  cout<<"Dlugosc drugiego boku: "<<bok4.modul()<<endl<<endl;
 }
 
 void Menu(){
@@ -52,8 +52,8 @@ void Menu(){
 }
 
 int main(){
-  Wektor2D w1(1,3), w2(4,6), w3(6,4), w4(3,1), vector;
-  Prostokat rectangle(w1,w2,w3,w4), newRec;
+  Wektor2D w1(1,1), w2(11,1), w3(11,6), w4(1,6), vector;
+  Prostokat rectangle(w1,w2,w3,w4);
   char wybor;
   double katDeg;
   int obroty;
@@ -61,6 +61,7 @@ int main(){
 
   porownajBoki(rectangle);
   Menu();
+
   do{
     cout<<endl<<"Twoj wybor? (m - menu) > ";
     cin>>wybor;
@@ -73,12 +74,12 @@ int main(){
         cout<<endl<<"Ile razy operacja obrotu ma byc powtorzona?"<<endl;
         cin>>obroty;
         cout<<endl;
-        newRec=rectangle.rotacja(katDeg*obroty);
+        rectangle=rectangle.rotacja(katDeg*obroty);
         /*for(int i=0;i<obroty;i++){
           newRec=newRec.rotacja(katDeg);
         }*/
-        newRec.rysuj(rysownik);
-        porownajBoki(newRec);
+        rectangle.rysuj(rysownik);
+        porownajBoki(rectangle);
         break;
       case 'p':
         cout<<"Wprowadz wspolrzedne wektora translacji w postaci (x,y)";
@@ -92,7 +93,6 @@ int main(){
         }
         rectangle=rectangle.translacja(vector);
         rectangle.rysuj(rysownik);
-        porownajBoki(rectangle);
         break;
       case 'w':
         cout<<rectangle[0]<<endl;
@@ -107,7 +107,7 @@ int main(){
           delete rysownik;
           return 0;
       default:
-        cout<<endl<<"Nierozpoznana opcja."<<endl;
+        cout<<"Nierozpoznana opcja."<<endl;
         break;
     }
   }while(1);
