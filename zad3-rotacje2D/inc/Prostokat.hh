@@ -13,7 +13,7 @@ class Prostokat {
   std::vector<Wektor2D> punkty;
 
   public:
-  Prostokat rotacja(double kat_w_deg) const;
+  void rotacja(double kat_w_deg);
   Prostokat translacja(Wektor2D wek);
   const Wektor2D & operator [] (unsigned int ind) const;
   void rysuj(drawNS::Draw2DAPI *rysownik);

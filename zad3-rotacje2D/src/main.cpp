@@ -69,10 +69,11 @@ int main(){
         cout<<endl<<"Ile razy operacja obrotu ma byc powtorzona?"<<endl;
         cin>>obroty;
         cout<<endl;
-        rectangle=rectangle.rotacja(katDeg*obroty);
-        /*for(int i=0;i<obroty;i++){
-          newRec=newRec.rotacja(katDeg);
-        }*/
+        //rectangle=rectangle.rotacja(katDeg*obroty);
+        for(int i=0;i<obroty;i++){
+          rectangle.rotacja(katDeg);
+          cout<<i<<endl;
+        }
         rectangle.rysuj(rysownik);
         porownajBoki(rectangle);
         break;

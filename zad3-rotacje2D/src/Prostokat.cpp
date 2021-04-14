@@ -6,13 +6,11 @@
 using drawNS::Point2D;
 using drawNS::APIGnuPlot2D;
 
-Prostokat Prostokat::rotacja(double kat_w_deg) const{
+void Prostokat::rotacja(double kat_w_deg){
     Macierz2x2 matrix((kat_w_deg*3.14)/180);
-    Prostokat nowy;
     for(int i=0;i<4;i++){
-    nowy.punkty[i]=matrix*this->punkty[i];
+    punkty[i]=matrix*this->punkty[i];
     }
-    return nowy;
 }
 
 Prostokat Prostokat::translacja(Wektor2D wek){
