@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../inc/Wektor.hh"
+#include "../inc/Macierz.hh"
 
 int main(){
     Wektor<2> v1={1,1};
@@ -34,6 +35,9 @@ int main(){
     v3[4]=21;
 
     std::cout<<std::endl<<"--------------MACIERZ-----------------"<<std::endl;
+
+    Macierz<2> matrix2D(3.14, "OX");
+    Macierz<3> matrix3D(3.14*0.5);
 
     
 

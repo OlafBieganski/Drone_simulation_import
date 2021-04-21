@@ -16,8 +16,8 @@ class Wektor {
   public:
   Wektor(){for(int i=0;i<R;++i) tab.push_back(0.0);};
   Wektor(std::initializer_list<double> l): tab(l) {}
-  Wektor operator + (const Wektor<R> & arg2) const;
-  Wektor operator - (const Wektor<R> & arg2) const;
+  Wektor<R> operator + (const Wektor<R> & arg2) const;
+  Wektor<R> operator - (const Wektor<R> & arg2) const;
   double operator * (const Wektor<R> & arg2) const;
   const double & operator [] (unsigned int ind) const;
   double & operator [] (unsigned int ind);
