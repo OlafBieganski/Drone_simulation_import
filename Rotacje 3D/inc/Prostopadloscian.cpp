@@ -5,10 +5,6 @@
 -wiercholki podstawy
 -wierzcholki gornej podstawy odpowiadajace dolnym*/
 Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc){
-    if(wysokosc<=0){
-        std::cerr<<"Wysokosc nie moze byc ujemna."<<std::endl;
-        exit(1);
-    }
     Wektor<3> boki[4];
     boki[0]=podstawa[1]-podstawa[0];
     boki[1]=podstawa[2]-podstawa[1];
@@ -58,4 +54,10 @@ void Prostopadloscian::translacja(Wektor<3> przesuniecie){
 }
 
 
-    void rotacja(double katwRad, std::string axis);
+void Prostopadloscian::rotacja(double katwRad, std::string axis){
+    MacierzObr<3> obrot(katwRad, axis);
+
+    for(int i=0;i<8;++i){
+        punkty[i]=obrot*punkty[i];
+    }
+}
