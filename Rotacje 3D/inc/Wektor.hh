@@ -19,13 +19,24 @@ class Wektor {
   Wektor<R> operator + (const Wektor<R> & arg2) const;
   Wektor<R> operator - (const Wektor<R> & arg2) const;
   double operator * (const Wektor<R> & arg2) const;
+  Wektor<R> operator * (const double & arg2) const;
   const double & operator [] (unsigned int ind) const;
   double & operator [] (unsigned int ind);
   bool operator == (const Wektor<R> & arg2) const;
+  bool operator != (const Wektor<R> & arg2) const;
   double modul() const;
 };
 
 //drawNS::Point2D konwertuj(Wektor arg);
+
+template<unsigned int R>
+Wektor<R> Wektor<R>::operator * (const double & arg2) const{
+  Wektor<R> wynik;
+  for(int i=0;i<R;i++){
+    wynik[i]=tab[i]*arg2;
+  }
+  return wynik;
+}
 
 
 template<unsigned int R>
@@ -88,9 +99,15 @@ std::ostream& operator << (std::ostream &Strm, const Wektor<R> &Wek){
 template<unsigned int R>
 bool Wektor<R>::operator == (const Wektor<R> & arg2) const{
     for(int i=0;i<R;++i){
-        if(abs(arg2[i]-tab[i])<EPSILON) return false;
+        if(abs(arg2[i]-tab[i])>EPSILON) return false;
     }
     return true;
+}
+
+template<unsigned int R>
+bool Wektor<R>::operator != (const Wektor<R> & arg2) const{
+  if(*this==arg2) return false;
+  return true;
 }
 
 template<unsigned int R>
