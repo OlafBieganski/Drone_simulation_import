@@ -1,9 +1,11 @@
 #ifndef PROSTOPADLOSCIAN_HH
 #define PROSTOPADLOSCIAN_HH
 
+#include "../API/source/Dr3D_gnuplot_api.hh"
 #include "Wektor.hh"
 #include "MacierzObr.hh"
 #include <array>
+
 
 class Prostopadloscian{
     private:
@@ -13,6 +15,7 @@ class Prostopadloscian{
     void translacja(Wektor<3> przesuniecie);
     void rotacja(double katwRad, std::string axis);
     const Wektor<3> operator [] (unsigned int ind) const;
+    void rysuj(drawNS::Draw3DAPI *rysownik);
 };
 
 

@@ -1,16 +1,36 @@
 #include "Prostopadloscian.hh"
 
 
-/*Wierzcholki podajemy w kolejnosci:
--wiercholki podstawy
--wierzcholki gornej podstawy odpowiadajace dolnym*/
+using drawNS::Point3D;
+using drawNS::APIGnuPlot3D;
+using std::vector;
+
+Point3D konwertuj(Wektor<3> punkt){
+    return Point3D(punkt[0],punkt[1],punkt[2]);
+}
+
+void Prostopadloscian::rysuj(drawNS::Draw3DAPI *rysownik){
+    vector<Point3D> points1;
+    vector<vector<Point3D>> points2;
+    for(int i=0;i<8;++i){
+        points1.push_back(konwertuj(punkty[i]));
+    }
+    points2.push_back(points1);
+    rysownik->draw_polyhedron(points2);
+    std::cout<<"halo"<<std::endl;
+}
+
+
 Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc){
     Wektor<3> boki[4];
     boki[0]=podstawa[1]-podstawa[0];
     boki[1]=podstawa[2]-podstawa[1];
     boki[2]=podstawa[3]-podstawa[2];
     boki[3]=podstawa[0]-podstawa[3];
-    if( (boki[0]!=boki[2]) || (boki[1]!=boki[3]) || boki[0]*boki[1]!=0 || boki[2]*boki[3]!=0){
+    double dlugoscBoku[4];
+    for(int i=0;i<4;++i) dlugoscBoku[i]=boki[i].modul();
+    for(int i=0;i<4;++i) std::cout<<dlugoscBoku[i]<<std::endl;
+    if( !((dlugoscBoku[0]==dlugoscBoku[2]) && (dlugoscBoku[1]==dlugoscBoku[3]) && boki[0]*boki[1]==0 && boki[2]*boki[3]==0)){
         std::cerr<<"To nie jest prostopadloscian."<<std::endl;
         exit(1);
     }

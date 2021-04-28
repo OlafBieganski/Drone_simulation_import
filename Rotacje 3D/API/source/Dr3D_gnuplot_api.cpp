@@ -38,7 +38,7 @@ APIGnuPlot3D::APIGnuPlot3D(double minX, double maxX, double minY, double maxY, d
     gnuplot_pid=local_pid;
     stringstream ss_tmp;
 
-    ss_tmp << " set terminal qt" << endl
+    ss_tmp << " set terminal x11" << endl
            << "set xrange [" << minX << ":" << maxX << "]" << endl
            << "set yrange [" << minY << ":" << maxY << "]" << endl
            << "set zrange [" << minZ << ":" << maxZ << "]" << endl
