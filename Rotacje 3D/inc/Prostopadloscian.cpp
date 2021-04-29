@@ -12,12 +12,28 @@ Point3D konwertuj(Wektor<3> punkt){
 void Prostopadloscian::rysuj(drawNS::Draw3DAPI *rysownik){
     vector<Point3D> points1;
     vector<vector<Point3D>> points2;
-    for(int i=0;i<8;++i){
+    int i;
+
+    for(int i=0;i<4;++i){
+        points1.push_back(konwertuj(punkty[i]));
+        points1.push_back(konwertuj(punkty[i+4]));
         points1.push_back(konwertuj(punkty[i]));
     }
+    points1.push_back(konwertuj(punkty[0]));
+    for(int i=4;i<8;++i){
+        points1.push_back(konwertuj(punkty[i]));
+    }
+    points1.push_back(konwertuj(punkty[4]));
+
     points2.push_back(points1);
+
+    //rysujemy glowny ksztalt
     rysownik->draw_polyhedron(points2);
-    std::cout<<"halo"<<std::endl;
+
+    //dorysowujemy brakujace linie
+    for(i=0;i<4;++i){
+        rysownik->draw_line(konwertuj(punkty[i]), konwertuj(punkty[i+4]));
+    }
 }
 
 
@@ -30,7 +46,9 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
     double dlugoscBoku[4];
     for(int i=0;i<4;++i) dlugoscBoku[i]=boki[i].modul();
     for(int i=0;i<4;++i) std::cout<<dlugoscBoku[i]<<std::endl;
-    if( !((dlugoscBoku[0]==dlugoscBoku[2]) && (dlugoscBoku[1]==dlugoscBoku[3]) && boki[0]*boki[1]==0 && boki[2]*boki[3]==0)){
+    for(int i=0;i<4;++i) std::cout<<boki[i]<<std::endl;
+    std::cout<<(boki[0]*boki[1])<<'\t'<<(boki[2]*boki[3])<<std::endl;
+    if( (dlugoscBoku[0]!=dlugoscBoku[2]) || (dlugoscBoku[1]!=dlugoscBoku[3]) || boki[0]*boki[1]!=0 || boki[2]*boki[3]!=0){
         std::cerr<<"To nie jest prostopadloscian."<<std::endl;
         exit(1);
     }
