@@ -16,6 +16,7 @@ class Prostopadloscian{
     void rotacja(double katwRad, std::string axis);
     const Wektor<3> operator [] (unsigned int ind) const;
     void rysuj(drawNS::Draw3DAPI *rysownik);
+    std::array<std::array<double,4>,3> dlugoscKrawedzi() const;
 };
 
 

@@ -1,9 +1,36 @@
 #include "../inc/Prostopadloscian.hh"
 
-
 using drawNS::Point3D;
 using drawNS::APIGnuPlot3D;
 using std::vector;
+using std::array;
+
+
+std::array<std::array<double,4>,3> Prostopadloscian::dlugoscKrawedzi() const{
+    array<array<double,4>,3> zbiorKrawedzi;
+    array<double,4> dlugoscKrawedzi1;
+    array<double,4> dlugoscKrawedzi2;
+    array<double,4> dlugoscWysokosci;
+    int i;
+
+    for(i=0;i<8;i+2){
+        dlugoscKrawedzi1[i/2]=(punkty[i+1]-punkty[i]).modul();
+    }
+    for(i=0;i<4;++i){
+        dlugoscWysokosci[i]=(punkty[i+4]-punkty[i]).modul();
+    }
+    
+    dlugoscKrawedzi2[1]=(punkty[2]-punkty[1]).modul();
+    dlugoscKrawedzi2[0]=(punkty[3]-punkty[0]).modul();
+    dlugoscKrawedzi2[1]=(punkty[6]-punkty[5]).modul();
+    dlugoscKrawedzi2[1]=(punkty[7]-punkty[4]).modul();
+
+    zbiorKrawedzi[0]=dlugoscKrawedzi1;
+    zbiorKrawedzi[1]=dlugoscKrawedzi2;
+    zbiorKrawedzi[2]=dlugoscWysokosci;
+    
+    return zbiorKrawedzi;
+}
 
 Point3D konwertuj(Wektor<3> punkt){
     return Point3D(punkt[0],punkt[1],punkt[2]);
