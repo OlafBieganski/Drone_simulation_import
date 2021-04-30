@@ -6,6 +6,16 @@
 
 
 template<unsigned int R>
+Wektor<R> Wektor<R>::operator * (const double & arg2) const{
+  Wektor<R> wynik;
+  for(unsigned int i=0;i<R;i++){
+    wynik[i]=tab[i]*arg2;
+  }
+  return wynik;
+}
+
+
+template<unsigned int R>
 double Wektor<R>::modul() const{
   return sqrt((*this)*(*this));
 }
@@ -14,7 +24,7 @@ double Wektor<R>::modul() const{
 template<unsigned int R>
 Wektor<R>  Wektor<R>::operator + (const Wektor<R> & arg2) const{
     Wektor<R> wynik;
-    for(int i=0;i<R;i++){
+    for(unsigned int i=0;i<R;i++){
         wynik[i]=tab[i]+arg2[i];
     }
     return wynik;
@@ -23,7 +33,7 @@ Wektor<R>  Wektor<R>::operator + (const Wektor<R> & arg2) const{
 template<unsigned int R>
 Wektor<R>  Wektor<R>::operator - (const Wektor<R> & arg2) const{
     Wektor<R> wynik;
-    for(int i=0;i<R;i++){
+    for(unsigned int i=0;i<R;i++){
         wynik[i]=tab[i]-arg2[i];
     }
     return wynik;
@@ -32,7 +42,7 @@ Wektor<R>  Wektor<R>::operator - (const Wektor<R> & arg2) const{
 template<unsigned int R>
 double  Wektor<R>::operator * (const Wektor<R> & arg2) const{
     double wynik=0;
-    for(int i=0;i<R;i++) wynik+=tab[i]*arg2[i];
+    for(unsigned int i=0;i<R;i++) wynik+=tab[i]*arg2[i];
     return wynik;
 }
 
@@ -52,22 +62,25 @@ double & Wektor<R>::operator [] (unsigned int ind){
 
 template<unsigned int R>
 std::ostream& operator << (std::ostream &Strm, const Wektor<R> &Wek){
-    for(int i=0;i<R;++i){
+    for(unsigned int i=0;i<R;++i){
     Strm<< std::setw(16) << std::fixed << std::setprecision(10)<< Wek[i];
     }
     return Strm;
 }
 
-//    drawNS::Point2D konwertuj(Wektor<R> arg){
-//        return drawNS::Point2D(arg[0], arg[1]);
-//    }
 
 template<unsigned int R>
 bool Wektor<R>::operator == (const Wektor<R> & arg2) const{
-    for(int i=0;i<R;++i){
-        if(abs(arg2[i]-tab[i])<EPSILON) return false;
+    for(unsigned int i=0;i<R;++i){
+        if(abs(arg2[i]-tab[i])>EPSILON) return false;
     }
     return true;
+}
+
+template<unsigned int R>
+bool Wektor<R>::operator != (const Wektor<R> & arg2) const{
+  if(*this==arg2) return false;
+  return true;
 }
 
 template<unsigned int R>
@@ -93,7 +106,7 @@ std::istream& operator >> (std::istream &Strm, Wektor<R> &Wek){
         return Strm;
     }
     if(R>2){
-        for(int i=1;i<(R-1);++i){
+        for(unsigned int i=1;i<(R-1);++i){
             Strm>>x;
             Wek[i]=x;
             Strm>>znak;
