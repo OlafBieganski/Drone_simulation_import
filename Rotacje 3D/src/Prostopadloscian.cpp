@@ -13,7 +13,7 @@ std::array<std::array<double,4>,3> Prostopadloscian::dlugoscKrawedzi() const{
     array<double,4> dlugoscWysokosci;
     int i;
 
-    for(i=0;i<8;i+2){
+    for(i=0;i<8;i+=2){
         dlugoscKrawedzi1[i/2]=(punkty[i+1]-punkty[i]).modul();
     }
     for(i=0;i<4;++i){
@@ -36,7 +36,7 @@ Point3D konwertuj(Wektor<3> punkt){
     return Point3D(punkt[0],punkt[1],punkt[2]);
 }
 
-void Prostopadloscian::rysuj(drawNS::Draw3DAPI *rysownik){
+void Prostopadloscian::rysuj(std::shared_ptr<drawNS::Draw3DAPI> rysownik){
     vector<Point3D> points1;
     vector<vector<Point3D>> points2;
     int i;
@@ -71,10 +71,9 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
     boki[2]=podstawa[3]-podstawa[2];
     boki[3]=podstawa[0]-podstawa[3];
     double dlugoscBoku[4];
+
     for(int i=0;i<4;++i) dlugoscBoku[i]=boki[i].modul();
-    for(int i=0;i<4;++i) std::cout<<dlugoscBoku[i]<<std::endl;
-    for(int i=0;i<4;++i) std::cout<<boki[i]<<std::endl;
-    std::cout<<(boki[0]*boki[1])<<'\t'<<(boki[2]*boki[3])<<std::endl;
+
     if( (dlugoscBoku[0]!=dlugoscBoku[2]) || (dlugoscBoku[1]!=dlugoscBoku[3]) || boki[0]*boki[1]!=0 || boki[2]*boki[3]!=0){
         std::cerr<<"To nie jest prostopadloscian."<<std::endl;
         exit(1);

@@ -1,62 +1,82 @@
-#include "Wektor.hh"
-#include "MacierzObr.hh"
-#include "Prostopadloscian.hh"
+#include "../inc/Wektor.hh"
+#include "../inc/MacierzObr.hh"
+#include "../inc/Prostopadloscian.hh"
 #include "../API/source/Dr3D_gnuplot_api.hh"
 
 using drawNS::Draw3DAPI;
+using drawNS::APIGnuPlot3D;
 using std::cout;
 using std::cin;
 using std::endl;
 
+void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
+  int i;
 
-void porownajBoki(const Prostokat & rectangle){
-  Wektor2D bok1, bok2, bok3, bok4;
-
-  bok1=rectangle[1]-rectangle[0];
-  bok2=rectangle[2]-rectangle[1];
-  bok3=rectangle[2]-rectangle[3];
-  bok4=rectangle[3]-rectangle[0];
-
-  if(bok1==bok3){
-    cout<<endl<<"Dluzsze przeciwlegle boki sa rownej dlugosci."<<endl;
+  if(krawedzie[0][0]==krawedzie[0][1]==krawedzie[0][2]==krawedzie[0][3]){
+    cout<<"Krotsze krawedzie podstawy sa rownej dlugosci."<<endl;
   }
   else{
-    cout<<"Dluzsze przeciwlegle boki nie sa rownej dlugosci."<<endl;
+    cout<<"Krotsze krawedzie podstawy sa roznej dlugosci."<<endl;
   }
 
-  cout<<endl<<"Dlugosc pierwszego boku: "<<bok1.modul()<<endl;
-  cout<<"Dlugosc drugiego boku: "<<bok3.modul()<<endl<<endl;
+  for(i=0;i<4;++i){
+    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[0][i]<<endl;
+  }
 
-  if(bok2==bok4){
-    cout<<"Krotsze przeciwlegle boki sa rownej dlugosci."<<endl;
+  if(krawedzie[1][0]==krawedzie[1][1]==krawedzie[1][2]==krawedzie[1][3]){
+    cout<<"Dluzsze krawedzie podstawy sa rownej dlugosci."<<endl;
   }
   else{
-    cout<<"Krotsze przeciwlegle boki nie sa rownej dlugosci."<<endl;
+    cout<<"Dluzsze krawedzie podstawy sa roznej dlugosci."<<endl;
   }
-  
-  cout<<endl<<"Dlugosc pierwszego boku: "<<bok2.modul()<<endl;
-  cout<<"Dlugosc drugiego boku: "<<bok4.modul()<<endl<<endl;
+
+  for(i=0;i<4;++i){
+    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[1][i]<<endl;
+  }
+
+  if(krawedzie[2][0]==krawedzie[2][1]==krawedzie[2][2]==krawedzie[2][3]){
+    cout<<"Wysokosci prostopadloscianu sa rownej dlugosci."<<endl;
+  }
+  else{
+    cout<<"Wysokosci prostopadloscianu sa roznej dlugosci."<<endl;
+  }
+
+  for(i=0;i<4;++i){
+    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[2][i]<<endl;
+  }
 }
 
 void Menu(){
   cout<<"o - obrot prostokata o zadany kat"<<endl;
+  cout<<"t - powtorzenie poprzedniego obrotu"<<endl;
+  cout<<"r - wyswietlenie macierzy rotacji"<<endl;
   cout<<"p - przesuniecie prostokata o zadany wektor"<<endl;
   cout<<"w - wyswietlenie wspolrzednych wierzcholkow"<<endl;
+  cout<<"s - sprawdzenie dlugosci przeciwleglych bokow"<<endl;
   cout<<"m - wyswietl menu"<<endl;
   cout<<"k - koniec dzialania programu"<<endl;
 }
 
 int main(){
-  Wektor2D w1(1,1), w2(11,1), w3(11,6), w4(1,6), vector;
-  Prostokat rectangle(w1,w2,w3,w4);
+
   char wybor;
   double katDeg;
   int obroty;
-  drawNS::Draw2DAPI *rysownik=new APIGnuPlot2D(-15,15,-15,15,0);
 
-  porownajBoki(rectangle);
+  Wektor<3> punkty[4]={{1,1,0}, {2,1,0}, {2,3,0}, {1,3,0}};
+  std::array<Wektor<3>, 4> podstawa;
+  for(int i=0;i<4;++i){
+    podstawa[i]=punkty[i];
+  }
+
+  std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(-5,5,-5,5,-5,5,1000));
+  Prostopadloscian bryla(podstawa, 1.0);
+
+  porownajBoki(bryla.dlugoscKrawedzi());
   Menu();
 
+  return 0;
+/*
   while(1){
     cout<<endl<<"Twoj wybor? (m - menu) > ";
     cin>>wybor;
@@ -107,4 +127,5 @@ int main(){
         break;
     }
   }
+  */
 }
