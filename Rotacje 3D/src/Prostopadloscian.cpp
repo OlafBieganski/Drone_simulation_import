@@ -1,4 +1,4 @@
-#include "Prostopadloscian.hh"
+#include "../inc/Prostopadloscian.hh"
 
 
 using drawNS::Point3D;
