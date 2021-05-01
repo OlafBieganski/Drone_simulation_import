@@ -61,8 +61,9 @@ void Menu(){
 int main(){
 
   char wybor;
-  double katDeg;
-  int obroty;
+  std::array<double,3> katDeg;
+  int obroty, i;
+  Wektor<3> przesuniecie;
 
   Wektor<3> punkty[4]={{1,1,0}, {2,1,0}, {2,3,0}, {1,3,0}};
   std::array<Wektor<3>, 4> podstawa;
@@ -76,8 +77,6 @@ int main(){
   porownajBoki(bryla.dlugoscKrawedzi());
   Menu();
 
-  return 0;
-/*
   while(1){
     cout<<endl<<"Twoj wybor? (m - menu) > ";
     cin>>wybor;
@@ -85,28 +84,30 @@ int main(){
 
     switch(wybor){
       case 'o':
-        cout<<"Podaj wartosc kata obrotu w stopniach"<<endl;
-        cin>>katDeg;
+        cout<<"Podaj katy obrotu w stopniach kolejno dla kazdej osi (0 = brak obrot):"<<endl;
+        cout<<"OX: "; cin>>katDeg[0]; cout<<endl;
+        cout<<"OY: "; cin>>katDeg[1]; cout<<endl;
+        cout<<"OZ: "; cin>>katDeg[2]; cout<<endl;
         cout<<endl<<"Ile razy operacja obrotu ma byc powtorzona?"<<endl;
         cin>>obroty;
         cout<<endl;
-        //rectangle=rectangle.rotacja(katDeg*obroty);
         for(int i=0;i<obroty;i++){
-          rectangle.rotacja(katDeg);
-          cout<<i<<endl;
+          bryla.rotacja((katDeg[0]*M_PI)/180, "OX");
+          bryla.rotacja((katDeg[1]*M_PI)/180, "OY");
+          bryla.rotacja((katDeg[2]*M_PI)/180, "OZ");
         }
-        rectangle.rysuj(rysownik);
-        porownajBoki(rectangle);
+        bryla.rysuj(api);
+        porownajBoki()
         break;
       case 'p':
-        cout<<"Wprowadz wspolrzedne wektora translacji w postaci (x,y)";
+        cout<<"Wprowadz wspolrzedne wektora translacji w postaci (x,y,z)";
         cout<<endl;
-        cin>>vector;
+        cin>>przesuniecie;
         while(!cin.good()){
           cin.clear();
           cin.ignore(1000, '\n');
           cout<<"Zly format. Wprowadz dane ponownie."<<endl;
-          cin>>vector;
+          cin>>przesuniecie;
         }
         rectangle=rectangle.translacja(vector);
         rectangle.rysuj(rysownik);
