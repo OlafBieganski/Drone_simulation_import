@@ -13,7 +13,7 @@ class Prostopadloscian{
     public:
     Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc);
     void translacja(Wektor<3> przesuniecie);
-    void rotacja(double katwRad, std::string axis);
+    void rotacja(MacierzObr<3> obrot);
     const Wektor<3> operator [] (unsigned int ind) const;
     void rysuj(std::shared_ptr<drawNS::Draw3DAPI> rysownik);
     std::array<std::array<double,4>,3> dlugoscKrawedzi() const;

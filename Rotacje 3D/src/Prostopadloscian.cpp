@@ -121,9 +121,7 @@ void Prostopadloscian::translacja(Wektor<3> przesuniecie){
 }
 
 
-void Prostopadloscian::rotacja(double katwRad, std::string axis){
-    MacierzObr<3> obrot(katwRad, axis);
-
+void Prostopadloscian::rotacja(MacierzObr<3> obrot){
     for(int i=0;i<8;++i){
         punkty[i]=obrot*punkty[i];
     }

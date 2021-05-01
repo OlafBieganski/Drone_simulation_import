@@ -12,8 +12,8 @@ using std::endl;
 void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
   int i;
 
-  cout.precision(10);
-  cout<<(krawedzie[0][0]+krawedzie[0][1]+krawedzie[0][2]+krawedzie[0][3])/4.0<<endl;
+  cout.precision(17);
+
   //liczymy srednia artytemtyczna zeby sprawdzic czy krawedzie rownej dlugosci
   if((krawedzie[0][0]+krawedzie[0][1]+krawedzie[0][2]+krawedzie[0][3])/4.0==krawedzie[0][0]){
     cout<<"Krotsze krawedzie podstawy sa rownej dlugosci."<<endl;
@@ -56,6 +56,7 @@ void Menu(){
   cout<<"p - przesuniecie prostokata o zadany wektor"<<endl;
   cout<<"w - wyswietlenie wspolrzednych wierzcholkow"<<endl;
   cout<<"s - sprawdzenie dlugosci przeciwleglych bokow"<<endl;
+  cout<<"d - rysyj figure w gnuplocie"<<endl;
   cout<<"m - wyswietl menu"<<endl;
   cout<<"k - koniec dzialania programu"<<endl;
 }
@@ -86,7 +87,7 @@ int main(){
     cout<<endl;
 
     switch(wybor){
-      case 'o':
+      case 'o':{
         cout<<"Podaj katy obrotu w stopniach kolejno dla kazdej osi (0 = brak obrot):"<<endl;
         cout<<"OX: "; cin>>katDeg[0]; cout<<endl;
         cout<<"OY: "; cin>>katDeg[1]; cout<<endl;
@@ -94,14 +95,17 @@ int main(){
         cout<<endl<<"Ile razy operacja obrotu ma byc powtorzona?"<<endl;
         cin>>obroty;
         cout<<endl;
+        MacierzObr<3> macierzX((katDeg[0]*M_PI)/180.0);
+        MacierzObr<3> macierzY((katDeg[1]*M_PI)/180.0);
+        MacierzObr<3> macierzZ((katDeg[2]*M_PI)/180.0);
+        macierzRotacji=macierzX*macierzY*macierzZ;
         for(int i=0;i<obroty;i++){
-          bryla.rotacja((katDeg[0]*M_PI)/180.0, "OX");
-          bryla.rotacja((katDeg[1]*M_PI)/180.0, "OY");
-          bryla.rotacja((katDeg[2]*M_PI)/180.0, "OZ");
+          bryla.rotacja(macierzRotacji);
         }
         bryla.rysuj(api);
         porownajBoki(bryla.dlugoscKrawedzi());
         break;
+      }
       case 'p':
         cout<<"Wprowadz wspolrzedne wektora translacji w postaci (x,y,z)";
         cout<<endl;
@@ -125,9 +129,7 @@ int main(){
         break;
       case 't':
         for(int i=0;i<obroty;++i){
-          bryla.rotacja((katDeg[0]*M_PI)/180.0, "OX");
-          bryla.rotacja((katDeg[1]*M_PI)/180.0, "OY");
-          bryla.rotacja((katDeg[2]*M_PI)/180.0, "OZ");
+          bryla.rotacja(macierzRotacji);
         }
         bryla.rysuj(api);
         porownajBoki(bryla.dlugoscKrawedzi());
@@ -137,6 +139,9 @@ int main(){
         break;
       case 's':
         porownajBoki(bryla.dlugoscKrawedzi());
+        break;
+      case 'd':
+        bryla.rysuj(api);
         break;
       case 'k':
         return 0;
