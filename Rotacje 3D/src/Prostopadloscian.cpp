@@ -20,10 +20,10 @@ std::array<std::array<double,4>,3> Prostopadloscian::dlugoscKrawedzi() const{
         dlugoscWysokosci[i]=(punkty[i+4]-punkty[i]).modul();
     }
     
+    dlugoscKrawedzi2[0]=(punkty[3]-punkty[0]).modul();    
     dlugoscKrawedzi2[1]=(punkty[2]-punkty[1]).modul();
-    dlugoscKrawedzi2[0]=(punkty[3]-punkty[0]).modul();
-    dlugoscKrawedzi2[1]=(punkty[6]-punkty[5]).modul();
-    dlugoscKrawedzi2[1]=(punkty[7]-punkty[4]).modul();
+    dlugoscKrawedzi2[2]=(punkty[7]-punkty[4]).modul();    
+    dlugoscKrawedzi2[3]=(punkty[6]-punkty[5]).modul();
 
     zbiorKrawedzi[0]=dlugoscKrawedzi1;
     zbiorKrawedzi[1]=dlugoscKrawedzi2;
@@ -81,15 +81,19 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
     Wektor<3> wektorNormalny;
     Wektor<3> X={1,0,0}, Y={0,1,0}, Z={0,0,1};
     
-    // iloczyn skalarany
+    // iloczyn skalarany w celu obliczenia wektora normalnego
     wektorNormalny=wektorNormalny+(Z*(boki[0][0]*boki[1][1]));
     wektorNormalny=wektorNormalny+(X*(boki[0][1]*boki[1][2]));
     wektorNormalny=wektorNormalny+(Y*(boki[0][2]*boki[1][0]));
     wektorNormalny=wektorNormalny-(X*(boki[0][2]*boki[1][1]));
     wektorNormalny=wektorNormalny-(Y*(boki[0][0]*boki[1][2]));
     wektorNormalny=wektorNormalny-(Z*(boki[0][1]*boki[1][0]));
+    
+    //obliczamy wersor wektora normalnego
+    Wektor<3> wersor=wektorNormalny*(1/wektorNormalny.modul());
 
-    wektorNormalny=wektorNormalny*wysokosc;
+    //wektor wysokosci
+    Wektor<3> wysokoscWektor=wersor*wysokosc;
 
     Wektor<3> gornapodstawa[4];
 
@@ -101,7 +105,6 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
         punkty[i]=podstawa[i];
         punkty[i+4]=gornapodstawa[i];
     }
-
 }
 
 

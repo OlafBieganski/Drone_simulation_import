@@ -12,7 +12,8 @@ using std::endl;
 void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
   int i;
 
-  if(krawedzie[0][0]==krawedzie[0][1]==krawedzie[0][2]==krawedzie[0][3]){
+  //liczymy srednia artytemtyczna zeby sprawdzic czy krawedzie rownej dlugosci
+  if((krawedzie[0][0]+krawedzie[0][1]+krawedzie[0][2]+krawedzie[0][3])/4==krawedzie[0][0]){
     cout<<"Krotsze krawedzie podstawy sa rownej dlugosci."<<endl;
   }
   else{
@@ -23,7 +24,7 @@ void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
     cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[0][i]<<endl;
   }
 
-  if(krawedzie[1][0]==krawedzie[1][1]==krawedzie[1][2]==krawedzie[1][3]){
+  if((krawedzie[1][0]+krawedzie[1][1]+krawedzie[1][2]+krawedzie[1][3])/4==krawedzie[1][0]){
     cout<<"Dluzsze krawedzie podstawy sa rownej dlugosci."<<endl;
   }
   else{
@@ -34,7 +35,7 @@ void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
     cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[1][i]<<endl;
   }
 
-  if(krawedzie[2][0]==krawedzie[2][1]==krawedzie[2][2]==krawedzie[2][3]){
+  if((krawedzie[2][0]+krawedzie[2][1]+krawedzie[2][2]+krawedzie[2][3])/4==krawedzie[2][0]){
     cout<<"Wysokosci prostopadloscianu sa rownej dlugosci."<<endl;
   }
   else{
@@ -70,7 +71,7 @@ int main(){
   }
 
   std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(-5,5,-5,5,-5,5,1000));
-  Prostopadloscian bryla(podstawa, 1.0);
+  Prostopadloscian bryla(podstawa, 2.0);
 
   porownajBoki(bryla.dlugoscKrawedzi());
   Menu();
