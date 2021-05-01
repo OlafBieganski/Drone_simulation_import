@@ -120,7 +120,7 @@ MacierzObr<R>  MacierzObr<R>::operator * (const MacierzObr<R> & arg2) const{
 template <unsigned int R>
 Wektor<R>  MacierzObr<R>::operator * (const Wektor<R> & wektor) const{
     Wektor<R> wynik;
-    for(unsigned int i=R;i<0;++i){
+    for(unsigned int i=0;i<R;++i){
         wynik[i]=wektor*wiersze[i];
     }
     return wynik;

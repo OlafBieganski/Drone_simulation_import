@@ -109,7 +109,7 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
 
 
 const Wektor<3> Prostopadloscian::operator [] (unsigned int ind) const{
-    if(ind<7) return punkty[ind];
+    if(ind<8) return punkty[ind];
     std::cerr<<"Blad indeksowania obiektu Prostopadloscian."<<std::endl; 
     exit(1);
 }

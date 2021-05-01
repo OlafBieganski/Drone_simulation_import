@@ -12,8 +12,10 @@ using std::endl;
 void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
   int i;
 
+  cout.precision(10);
+  cout<<(krawedzie[0][0]+krawedzie[0][1]+krawedzie[0][2]+krawedzie[0][3])/4.0<<endl;
   //liczymy srednia artytemtyczna zeby sprawdzic czy krawedzie rownej dlugosci
-  if((krawedzie[0][0]+krawedzie[0][1]+krawedzie[0][2]+krawedzie[0][3])/4==krawedzie[0][0]){
+  if((krawedzie[0][0]+krawedzie[0][1]+krawedzie[0][2]+krawedzie[0][3])/4.0==krawedzie[0][0]){
     cout<<"Krotsze krawedzie podstawy sa rownej dlugosci."<<endl;
   }
   else{
@@ -21,10 +23,10 @@ void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
   }
 
   for(i=0;i<4;++i){
-    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[0][i]<<endl;
+    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<std::fixed<<krawedzie[0][i]<<endl;
   }
 
-  if((krawedzie[1][0]+krawedzie[1][1]+krawedzie[1][2]+krawedzie[1][3])/4==krawedzie[1][0]){
+  if((krawedzie[1][0]+krawedzie[1][1]+krawedzie[1][2]+krawedzie[1][3])/4.0==krawedzie[1][0]){
     cout<<"Dluzsze krawedzie podstawy sa rownej dlugosci."<<endl;
   }
   else{
@@ -32,10 +34,10 @@ void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
   }
 
   for(i=0;i<4;++i){
-    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[1][i]<<endl;
+    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<std::fixed<<krawedzie[1][i]<<endl;
   }
 
-  if((krawedzie[2][0]+krawedzie[2][1]+krawedzie[2][2]+krawedzie[2][3])/4==krawedzie[2][0]){
+  if((krawedzie[2][0]+krawedzie[2][1]+krawedzie[2][2]+krawedzie[2][3])/4.0==krawedzie[2][0]){
     cout<<"Wysokosci prostopadloscianu sa rownej dlugosci."<<endl;
   }
   else{
@@ -43,7 +45,7 @@ void porownajBoki(std::array<std::array<double,4>,3> krawedzie){
   }
 
   for(i=0;i<4;++i){
-    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<krawedzie[2][i]<<endl;
+    cout<<"Dlugosc krawedzi nr "<<i+1<<" = "<<std::fixed<<krawedzie[2][i]<<endl;
   }
 }
 
@@ -61,9 +63,10 @@ void Menu(){
 int main(){
 
   char wybor;
-  std::array<double,3> katDeg;
-  int obroty, i;
+  std::array<double,3> katDeg={0,0,0};
+  int obroty=0, i;
   Wektor<3> przesuniecie;
+  MacierzObr<3> macierzRotacji;
 
   Wektor<3> punkty[4]={{1,1,0}, {2,1,0}, {2,3,0}, {1,3,0}};
   std::array<Wektor<3>, 4> podstawa;
@@ -71,8 +74,8 @@ int main(){
     podstawa[i]=punkty[i];
   }
 
-  std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(-5,5,-5,5,-5,5,1000));
-  Prostopadloscian bryla(podstawa, 2.0);
+  std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(-5,5,-5,5,-5,5,0));
+  Prostopadloscian bryla(podstawa, 2.5);
 
   porownajBoki(bryla.dlugoscKrawedzi());
   Menu();
@@ -92,12 +95,12 @@ int main(){
         cin>>obroty;
         cout<<endl;
         for(int i=0;i<obroty;i++){
-          bryla.rotacja((katDeg[0]*M_PI)/180, "OX");
-          bryla.rotacja((katDeg[1]*M_PI)/180, "OY");
-          bryla.rotacja((katDeg[2]*M_PI)/180, "OZ");
+          bryla.rotacja((katDeg[0]*M_PI)/180.0, "OX");
+          bryla.rotacja((katDeg[1]*M_PI)/180.0, "OY");
+          bryla.rotacja((katDeg[2]*M_PI)/180.0, "OZ");
         }
         bryla.rysuj(api);
-        porownajBoki()
+        porownajBoki(bryla.dlugoscKrawedzi());
         break;
       case 'p':
         cout<<"Wprowadz wspolrzedne wektora translacji w postaci (x,y,z)";
@@ -109,25 +112,37 @@ int main(){
           cout<<"Zly format. Wprowadz dane ponownie."<<endl;
           cin>>przesuniecie;
         }
-        rectangle=rectangle.translacja(vector);
-        rectangle.rysuj(rysownik);
+        bryla.translacja(przesuniecie);
+        bryla.rysuj(api);
         break;
       case 'w':
-        cout<<rectangle[0]<<endl;
-        cout<<rectangle[1]<<endl;
-        cout<<rectangle[2]<<endl;
-        cout<<rectangle[3]<<endl;
+        for(i=0;i<8;i++){
+          cout<<bryla[i]<<endl;
+        }
         break;
       case 'm':
         Menu();
         break;
+      case 't':
+        for(int i=0;i<obroty;++i){
+          bryla.rotacja((katDeg[0]*M_PI)/180.0, "OX");
+          bryla.rotacja((katDeg[1]*M_PI)/180.0, "OY");
+          bryla.rotacja((katDeg[2]*M_PI)/180.0, "OZ");
+        }
+        bryla.rysuj(api);
+        porownajBoki(bryla.dlugoscKrawedzi());
+        break;
+      case 'r':
+        cout<<macierzRotacji<<endl;
+        break;
+      case 's':
+        porownajBoki(bryla.dlugoscKrawedzi());
+        break;
       case 'k':
-          delete rysownik;
-          return 0;
+        return 0;
       default:
         cout<<"Nierozpoznana opcja."<<endl;
         break;
     }
   }
-  */
 }
