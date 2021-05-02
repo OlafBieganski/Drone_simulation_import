@@ -36,7 +36,7 @@ Point3D konwertuj(Wektor<3> punkt){
     return Point3D(punkt[0],punkt[1],punkt[2]);
 }
 
-void Prostopadloscian::rysuj(std::shared_ptr<drawNS::Draw3DAPI> rysownik){
+void Prostopadloscian::rysuj(std::shared_ptr<drawNS::Draw3DAPI> rysownik) const{
     vector<Point3D> points1;
     vector<vector<Point3D>> points2;
     int i;
@@ -81,7 +81,7 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
     Wektor<3> wektorNormalny;
     Wektor<3> X={1,0,0}, Y={0,1,0}, Z={0,0,1};
     
-    // iloczyn skalarany w celu obliczenia wektora normalnego
+    // iloczyn wektorowy w celu obliczenia wektora normalnego
     wektorNormalny=wektorNormalny+(Z*(boki[0][0]*boki[1][1]));
     wektorNormalny=wektorNormalny+(X*(boki[0][1]*boki[1][2]));
     wektorNormalny=wektorNormalny+(Y*(boki[0][2]*boki[1][0]));
@@ -95,10 +95,10 @@ Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wys
     //wektor wysokosci
     Wektor<3> wysokoscWektor=wersor*wysokosc;
 
-    Wektor<3> gornapodstawa[4];
+    std::array<Wektor<3>,4> gornapodstawa;
 
     for(int i=0;i<4;++i){
-        gornapodstawa[i]=podstawa[i]+wektorNormalny;
+        gornapodstawa[i]=podstawa[i]+wysokoscWektor;
     }
 
     for(int i=0;i<4;++i){

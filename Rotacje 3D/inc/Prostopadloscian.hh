@@ -15,7 +15,7 @@ class Prostopadloscian{
     void translacja(Wektor<3> przesuniecie);
     void rotacja(MacierzObr<3> obrot);
     const Wektor<3> operator [] (unsigned int ind) const;
-    void rysuj(std::shared_ptr<drawNS::Draw3DAPI> rysownik);
+    void rysuj(std::shared_ptr<drawNS::Draw3DAPI> rysownik) const;
     std::array<std::array<double,4>,3> dlugoscKrawedzi() const;
 };
 
