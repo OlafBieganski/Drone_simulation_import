@@ -95,9 +95,9 @@ int main(){
         cout<<endl<<"Ile razy operacja obrotu ma byc powtorzona?"<<endl;
         cin>>obroty;
         cout<<endl;
-        MacierzObr<3> macierzX((katDeg[0]*M_PI)/180.0);
-        MacierzObr<3> macierzY((katDeg[1]*M_PI)/180.0);
-        MacierzObr<3> macierzZ((katDeg[2]*M_PI)/180.0);
+        MacierzObr<3> macierzX((katDeg[0]*M_PI)/180.0, "OX");
+        MacierzObr<3> macierzY((katDeg[1]*M_PI)/180.0, "OY");
+        MacierzObr<3> macierzZ((katDeg[2]*M_PI)/180.0, "OZ");
         macierzRotacji=macierzX*macierzY*macierzZ;
         for(int i=0;i<obroty;i++){
           bryla.rotacja(macierzRotacji);
