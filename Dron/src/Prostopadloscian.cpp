@@ -83,7 +83,7 @@ Prostopadloscian::Prostopadloscian(Wektor<3> baseMid, MacierzObr<3> baseOrient, 
     Wektor<3> wektorNormalny;
     Wektor<3> X={1,0,0}, Y={0,1,0}, Z={0,0,1};
     
-    // iloczyn skalarany w celu obliczenia wektora normalnego
+    // iloczyn wektorowy w celu obliczenia wektora normalnego
     wektorNormalny=wektorNormalny+(Z*(boki[0][0]*boki[1][1]));
     wektorNormalny=wektorNormalny+(X*(boki[0][1]*boki[1][2]));
     wektorNormalny=wektorNormalny+(Y*(boki[0][2]*boki[1][0]));
@@ -97,10 +97,10 @@ Prostopadloscian::Prostopadloscian(Wektor<3> baseMid, MacierzObr<3> baseOrient, 
     //wektor wysokosci
     Wektor<3> wysokoscWektor=wersor*wysokosc;
 
-    Wektor<3> gornapodstawa[4];
+    std::array<Wektor<3>,4> gornapodstawa;
 
     for(int i=0;i<4;++i){
-        gornapodstawa[i]=podstawa[i]+wektorNormalny;
+        gornapodstawa[i]=podstawa[i]+wysokoscWektor;
     }
 
     for(int i=0;i<4;++i){
