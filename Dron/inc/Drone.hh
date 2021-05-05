@@ -12,8 +12,9 @@ class Drone{
     Prostopadloscian frame;
     array<Hexagon3D,4> rotors;
     public:
-    void draw(void/*to be defined later*/) const;
+    void draw() const;
     void fly(double angleOZ, double height, double distance);
+    Drone(Wektor<3> middlePosition);
 };
 
 
