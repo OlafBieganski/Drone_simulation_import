@@ -3,11 +3,12 @@
 
 #include "Prostopadloscian.hh"
 #include "Hexagon3D.hh"
+#include "CoordinateSys.hh"
 #include <iostream>
 
 using std::array;
 
-class Drone{
+class Drone: public CoordinateSys {
     private:
     Prostopadloscian frame;
     array<Hexagon3D,4> rotors;

@@ -13,6 +13,7 @@ class Hexagon3D:public DrawingInterface, public CoordinateSys{
     void rotation(MacierzObr<3> rotationMatrix);
     const Wektor<3> operator [] (unsigned int ind) const;
     void draw(std::shared_ptr<drawNS::Draw3DAPI> api) const;
+    Hexagon3D(std::array<Wektor<3>,6> base, double height);
 };
 
 #endif

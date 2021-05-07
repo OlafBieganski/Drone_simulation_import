@@ -64,9 +64,8 @@ void Prostopadloscian::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
 }
 
 
-Prostopadloscian::Prostopadloscian(Wektor<3> baseMid, MacierzObr<3> baseOrient, std::array<Wektor<3>, 4> podstawa, double wysokosc){
-    // inicializacja klasy dziedziczonej
-    CoordinateSys(baseMid, baseOrient);
+Prostopadloscian::Prostopadloscian(Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent, std::array<Wektor<3>, 4> podstawa, double wysokosc): CoordinateSys(baseMid, baseOrient, ptr_to_parent) {
+
     Wektor<3> boki[4];
     boki[0]=podstawa[1]-podstawa[0];
     boki[1]=podstawa[2]-podstawa[1];
