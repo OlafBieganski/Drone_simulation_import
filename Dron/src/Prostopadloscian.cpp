@@ -6,6 +6,10 @@ using std::vector;
 using std::array;
 
 
+drawNS::Point3D konwertuj(Wektor<3> punkt){
+    return drawNS::Point3D(punkt[0],punkt[1],punkt[2]);
+}
+
 std::array<std::array<double,4>,3> Prostopadloscian::dlugoscKrawedzi() const{
     array<array<double,4>,3> zbiorKrawedzi;
     array<double,4> dlugoscKrawedzi1;
@@ -32,9 +36,6 @@ std::array<std::array<double,4>,3> Prostopadloscian::dlugoscKrawedzi() const{
     return zbiorKrawedzi;
 }
 
-Point3D konwertuj(Wektor<3> punkt){
-    return Point3D(punkt[0],punkt[1],punkt[2]);
-}
 
 void Prostopadloscian::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
     vector<Point3D> points1;
@@ -64,7 +65,8 @@ void Prostopadloscian::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
 }
 
 
-Prostopadloscian::Prostopadloscian(Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent, std::array<Wektor<3>, 4> podstawa, double wysokosc): CoordinateSys(baseMid, baseOrient, ptr_to_parent) {
+Prostopadloscian::Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc,
+Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent): CoordinateSys(baseMid, baseOrient, ptr_to_parent) {
 
     Wektor<3> boki[4];
     boki[0]=podstawa[1]-podstawa[0];

@@ -25,7 +25,16 @@ class Wektor {
   bool operator == (const Wektor<R> & arg2) const;
   bool operator != (const Wektor<R> & arg2) const;
   double modul() const;
+  Wektor<R> crossProduct(const Wektor<R> & v1, const Wektor<R> & v2);
 };
+
+template<unsigned int R>
+Wektor<R> Wektor<R>::crossProduct(const Wektor<R> & v1, const Wektor<R> & v2){
+    if(R!=3){
+        std::cerr<<"Iloczyn wektorowy dostepny tylko dla 3D"<<std::endl;
+        exit(1);
+    }
+}
 
 template<unsigned int R>
 Wektor<R> Wektor<R>::operator * (const double & arg2) const{
@@ -147,5 +156,7 @@ std::istream& operator >> (std::istream &Strm, Wektor<R> &Wek){
     }
     return Strm;
 }
+
+
 
 #endif

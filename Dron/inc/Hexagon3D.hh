@@ -2,18 +2,23 @@
 #define HEXAGON3D
 
 #include "DrawingInterface.hh"
+#include "CoordinateSys.hh"
 #include <array>
+#include "../API/source/Dr3D_gnuplot_api.hh"
 
-class Hexagon3D:public DrawingInterface, public CoordinateSys{
+class Hexagon3D:public DrawingInterface, public CoordinateSys {
     private:
     std::array<Wektor<3>,12> verticies;
     public:
-    void draw() const;
     void translation(Wektor<3> shift);
     void rotation(MacierzObr<3> rotationMatrix);
     const Wektor<3> operator [] (unsigned int ind) const;
     void draw(std::shared_ptr<drawNS::Draw3DAPI> api) const;
-    Hexagon3D(std::array<Wektor<3>,6> base, double height);
+    Hexagon3D(std::array<Wektor<3>,6> base, double height, Wektor<3> baseMid=Wektor<3>(),
+     MacierzObr<3> baseOrient=MacierzObr<3>(), CoordinateSys *ptr_to_parent=nullptr);
+    Hexagon3D(Wektor<3> middle, double diagonal, double height);
+    Hexagon3D();
+    void setCoord(Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent)
+    {parent=ptr_to_parent;middle=baseMid;orientation=baseOrient;}
 };
-
 #endif
