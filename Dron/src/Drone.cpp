@@ -1,35 +1,69 @@
 #include "../inc/Drone.hh"
 
+#define ROTORSQUAN 4 // ilosc wirnikow
+
 using std::array;
 
+// nalezy podac srodek drona
 Drone::Drone(Wektor<3> droneMiddle){
+
+    Prostopadloscian body(array<Wektor<3>,4>{{Wektor<3>{2,2,-0.5},Wektor<3>{2,-2,-0.5},Wektor<3>{-2,-2,-0.5},Wektor<3>{-2,2,-0.5}}},-1);
+
+    Hexagon3D proppeler(Wektor<3>(),3,0.5);
     
-    Wektor<3> proppelerMid1={2,2,1.5}, proppelerMid2={5,2,1.5},
-    proppelerMid3={5,5,1.5}, proppelerMid4={2,5,1.5};
-
-    Prostopadloscian body(array<Wektor<3>,4>{{Wektor<3>{2,2,0},Wektor<3>{5,2,0},Wektor<3>{5,5,0},Wektor<3>{2,5,0}}},1);
-    Hexagon3D proppeler1(proppelerMid1,2,0.5), proppeler2(proppelerMid2,2,0.5), proppeler3(proppelerMid3,2,0.5),
-    proppeler4(proppelerMid4,2,0.5);
-
-    const Wektor<3> initialMiddle={3.5,3.5,0.5};
-
-    body.translacja(initialMiddle-droneMiddle);
-    proppeler1.translation(initialMiddle-droneMiddle);
-    proppeler2.translation(initialMiddle-droneMiddle);
-    proppeler3.translation(initialMiddle-droneMiddle);
-    proppeler4.translation(initialMiddle-droneMiddle);
-
+    for(int i=0;i<ROTORSQUAN;i++) rotors[i]=proppeler;
     frame=body;
-    rotors[0]=proppeler1;
-    rotors[1]=proppeler2;
-    rotors[2]=proppeler3;
-    rotors[3]=proppeler4;
+
+    frame.setCoord(droneMiddle, MacierzObr<3>(), this);
+    
+    MacierzObr<3> turn(M_PI/2, "OZ");
+    Wektor<3> shift={2,2,0.75};
+
+    for(int i=0;i<ROTORSQUAN;i++){
+       rotors[i].setCoord(shift, MacierzObr<3>(), &frame);
+       shift=turn*shift;
+    }
 }
 
 
 void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
-    frame.draw(api);
-    for(int i=0;i<4;i++){
-        rotors[i].draw(api);
+    
+    Prostopadloscian newFrame=frame.convert_to_parent();
+    array<Hexagon3D, 4> newRotors;
+
+    for(int i=0;i<ROTORSQUAN;i++){
+        newRotors[i]=rotors[i].convert_to_granpa();
     }
+    
+    newFrame.draw(api);
+    for(int i=0;i<ROTORSQUAN;i++){
+        newRotors[i].draw(api);
+    }
+    
+}
+
+void Drone::flyUp(double height){
+
+    Wektor<3> v={0,0,height};
+    frame.translateSys(v);
+  //  for(int i=0;i<ROTORSQUAN;i++){
+  //      rotors[i].translateSys(v);
+  //  }
+}
+
+
+void Drone::flyVert(double distance){
+    
+    Wektor<3> v={distance,0,0};
+    frame.translateSys(v);
+   // for(int i=0;i<ROTORSQUAN;i++){
+   //     rotors[i].translateSys(v);
+   // }
+}
+
+
+void Drone::turn(double angle_deg){
+
+    MacierzObr<3> turn((angle_deg/180)*M_PI,"OZ");
+    frame.rotateSys(turn);
 }

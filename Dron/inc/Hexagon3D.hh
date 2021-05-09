@@ -20,5 +20,8 @@ class Hexagon3D:public DrawingInterface, public CoordinateSys {
     Hexagon3D();
     void setCoord(Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent)
     {parent=ptr_to_parent;middle=baseMid;orientation=baseOrient;}
+    Hexagon3D convert_to_parent() const;
+    Hexagon3D convert_to_granpa() const;
 };
+
 #endif

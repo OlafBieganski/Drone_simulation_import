@@ -132,3 +132,25 @@ void Hexagon3D::rotation(MacierzObr<3> rotationMatrix){
         verticies[i]=rotationMatrix*verticies[i];
     }
 }
+
+Hexagon3D Hexagon3D::convert_to_parent() const{
+
+    Hexagon3D converted;
+    converted.middle=this->parent->getMiddle();
+    converted.orientation=this->parent->getOrient();
+    converted.parent=this->parent->getParent();
+
+    for(int i=0;i<12;i++){
+        converted.verticies[i]=(this->orientation*this->verticies[i])+this->middle;
+    }
+
+    return converted;
+}
+
+Hexagon3D Hexagon3D::convert_to_granpa() const{
+
+    Hexagon3D converted;
+    converted=this->convert_to_parent();
+    converted=converted.convert_to_parent();
+    return converted;
+}

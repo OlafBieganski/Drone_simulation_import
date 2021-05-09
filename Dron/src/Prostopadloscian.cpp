@@ -129,3 +129,17 @@ void Prostopadloscian::rotacja(MacierzObr<3> obrot){
         punkty[i]=obrot*punkty[i];
     }
 }
+
+Prostopadloscian Prostopadloscian::convert_to_parent() const{
+    
+    Prostopadloscian converted;
+    converted.middle=this->parent->getMiddle();
+    converted.orientation=this->parent->getOrient();
+    converted.parent=this->parent->getParent();
+
+    for(int i=0;i<8;i++){
+        converted.punkty[i]=(this->orientation*this->punkty[i])+this->middle;
+    }
+
+    return converted;
+}
