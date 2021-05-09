@@ -5,7 +5,7 @@
 
 class DrawingInterface{
     public:
-    virtual void draw(std::shared_ptr<drawNS::Draw3DAPI> api) const = 0;
+    virtual int draw(std::shared_ptr<drawNS::Draw3DAPI> api) const = 0;
 };
 
 #endif

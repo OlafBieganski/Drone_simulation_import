@@ -37,31 +37,20 @@ std::array<std::array<double,4>,3> Prostopadloscian::dlugoscKrawedzi() const{
 }
 
 
-void Prostopadloscian::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
-    vector<Point3D> points1;
-    vector<vector<Point3D>> points2;
-    int i;
+int Prostopadloscian::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
+    vector<Point3D> points1, points2;
+    vector<vector<Point3D>> pointsCollection;
 
     for(int i=0;i<4;++i){
         points1.push_back(konwertuj(punkty[i]));
-        points1.push_back(konwertuj(punkty[i+4]));
-        points1.push_back(konwertuj(punkty[i]));
+        points2.push_back(konwertuj(punkty[i+4]));
     }
-    points1.push_back(konwertuj(punkty[0]));
-    for(int i=4;i<8;++i){
-        points1.push_back(konwertuj(punkty[i]));
-    }
-    points1.push_back(konwertuj(punkty[4]));
 
-    points2.push_back(points1);
+    pointsCollection.push_back(points1);
+    pointsCollection.push_back(points2);
 
     //rysujemy glowny ksztalt
-    api->draw_polyhedron(points2);
-
-    //dorysowujemy brakujace linie
-    for(i=0;i<4;++i){
-        api->draw_line(konwertuj(punkty[i]), konwertuj(punkty[i+4]));
-    }
+    return api->draw_polyhedron(pointsCollection);
 }
 
 
@@ -131,7 +120,7 @@ void Prostopadloscian::rotacja(MacierzObr<3> obrot){
 }
 
 Prostopadloscian Prostopadloscian::convert_to_parent() const{
-    
+
     Prostopadloscian converted;
     converted.middle=this->parent->getMiddle();
     converted.orientation=this->parent->getOrient();

@@ -26,7 +26,7 @@ Drone::Drone(Wektor<3> droneMiddle){
 }
 
 
-void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
+void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api){
     
     Prostopadloscian newFrame=frame.convert_to_parent();
     array<Hexagon3D, 4> newRotors;
@@ -34,10 +34,10 @@ void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
     for(int i=0;i<ROTORSQUAN;i++){
         newRotors[i]=rotors[i].convert_to_granpa();
     }
-    
-    newFrame.draw(api);
+
+    shapeID.push_back(newFrame.draw(api));
     for(int i=0;i<ROTORSQUAN;i++){
-        newRotors[i].draw(api);
+        shapeID.push_back(newRotors[i].draw(api));
     }
     
 }
@@ -66,4 +66,11 @@ void Drone::turn(double angle_deg){
 
     MacierzObr<3> turn((angle_deg/180)*M_PI,"OZ");
     frame.rotateSys(turn);
+}
+
+void Drone::eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api){
+    for(int i=0;i<5;i++){
+        api->erase_shape(shapeID[i]);
+    }
+    for(int i=0;i<5;i++) shapeID.pop_back();
 }

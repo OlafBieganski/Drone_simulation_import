@@ -102,7 +102,7 @@ const Wektor<3> Hexagon3D::operator [] (unsigned int ind) const{
 }
 
 
-void Hexagon3D::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
+int Hexagon3D::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
 
     vector<vector<drawNS::Point3D>> drawingSet;
     vector<drawNS::Point3D> set1, set2;
@@ -116,7 +116,7 @@ void Hexagon3D::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
     drawingSet.push_back(set1);
     drawingSet.push_back(set2);
 
-    api->draw_polyhedron(drawingSet);
+    return api->draw_polyhedron(drawingSet);
 }
 
 
