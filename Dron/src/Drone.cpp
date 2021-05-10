@@ -1,8 +1,11 @@
 #include "../inc/Drone.hh"
+#include <thread>
+#include <chrono>
 
 #define ROTORSQUAN 4 // ilosc wirnikow
 
 using std::array;
+
 
 // nalezy podac srodek drona
 Drone::Drone(Wektor<3> droneMiddle){
@@ -98,6 +101,7 @@ void Drone::animatedFly(double angle_deg, double height, double distance, std::s
         this->flyHoriz(0.1);
         this->moveRotors();
         this->draw(api);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
     for(i=0;i<angle_deg;i++){
@@ -105,6 +109,7 @@ void Drone::animatedFly(double angle_deg, double height, double distance, std::s
         this->turn(1);
         this->moveRotors();
         this->draw(api);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
     for(i=0;i<distance*10;i++){
@@ -112,6 +117,7 @@ void Drone::animatedFly(double angle_deg, double height, double distance, std::s
         this->flyVert(0.1);
         this->moveRotors();
         this->draw(api);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
     for(i=0;i<height*10;i++){
@@ -119,5 +125,6 @@ void Drone::animatedFly(double angle_deg, double height, double distance, std::s
         this->flyHoriz(-0.1);
         this->moveRotors();
         this->draw(api);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 }
