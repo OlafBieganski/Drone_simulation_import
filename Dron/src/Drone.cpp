@@ -42,23 +42,17 @@ void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api){
     
 }
 
-void Drone::flyUp(double height){
+void Drone::flyHoriz(double height){
 
     Wektor<3> v={0,0,height};
     frame.translateSys(v);
-  //  for(int i=0;i<ROTORSQUAN;i++){
-  //      rotors[i].translateSys(v);
-  //  }
 }
 
 
 void Drone::flyVert(double distance){
     
     Wektor<3> v={distance,0,0};
-    frame.translateSys(v);
-   // for(int i=0;i<ROTORSQUAN;i++){
-   //     rotors[i].translateSys(v);
-   // }
+    frame.translateSys(frame.getOrient()*v);
 }
 
 
@@ -68,9 +62,62 @@ void Drone::turn(double angle_deg){
     frame.rotateSys(turn);
 }
 
-void Drone::eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api){
+bool Drone::eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api){
+    
+    if(shapeID.empty()==true) return false;
     for(int i=0;i<5;i++){
         api->erase_shape(shapeID[i]);
     }
     for(int i=0;i<5;i++) shapeID.pop_back();
+    return true;
+}
+
+void Drone::land(){
+
+    const double half_of_height=0.5;
+    double deltaH= frame.getMiddle()[2]-half_of_height;
+    this->flyHoriz(-deltaH);
+}
+
+void Drone::moveRotors(){
+
+    MacierzObr<3> turn1((M_PI*20)/180, "OZ"),
+     turn2(-(M_PI*20)/180, "OZ");
+    rotors[0].rotateSys(turn1);
+    rotors[1].rotateSys(turn2);
+    rotors[2].rotateSys(turn1);
+    rotors[3].rotateSys(turn2);
+}
+
+void Drone::animatedFly(double angle_deg, double height, double distance, std::shared_ptr<drawNS::Draw3DAPI> api){
+
+    int i;
+
+    for(i=0;i<height*10;i++){
+        this->eraseDrone(api);
+        this->flyHoriz(0.1);
+        this->moveRotors();
+        this->draw(api);
+    }
+
+    for(i=0;i<angle_deg;i++){
+        this->eraseDrone(api);
+        this->turn(1);
+        this->moveRotors();
+        this->draw(api);
+    }
+
+    for(i=0;i<distance*10;i++){
+        this->eraseDrone(api);
+        this->flyVert(0.1);
+        this->moveRotors();
+        this->draw(api);
+    }
+
+    for(i=0;i<height*10;i++){
+        this->eraseDrone(api);
+        this->flyHoriz(-0.1);
+        this->moveRotors();
+        this->draw(api);
+    }
 }

@@ -14,13 +14,16 @@ class Drone: public CoordinateSys {
     Prostopadloscian frame;
     array<Hexagon3D,4> rotors;
     std::vector<int> shapeID;
+    void moveRotors();
     public:
     void draw(std::shared_ptr<drawNS::Draw3DAPI> api);
-    void flyUp(double height);
+    void flyHoriz(double height);
     void flyVert(double distance);
     void turn(double angle_deg);
+    void land();
     Drone(Wektor<3> droneMiddle);
-    void eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api);
+    bool eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api);
+    void animatedFly(double angle_deg, double height, double distance, std::shared_ptr<drawNS::Draw3DAPI> api);
 };
 
 
