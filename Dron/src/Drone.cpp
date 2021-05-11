@@ -3,6 +3,7 @@
 #include <chrono>
 
 #define ROTORSQUAN 4 // ilosc wirnikow
+#define HALF_HEIGHT 0.5 // polowa wysokosci korpusu
 
 using std::array;
 
@@ -17,7 +18,8 @@ Drone::Drone(Wektor<3> droneMiddle){
     for(int i=0;i<ROTORSQUAN;i++) rotors[i]=proppeler;
     frame=body;
 
-    frame.setCoord(droneMiddle, MacierzObr<3>(), this);
+    Wektor<3> correction={0,0,0.1}; // w celu unikniecia wnikania drona w podloze po locie
+    frame.setCoord(droneMiddle+correction, MacierzObr<3>(), this);
     
     MacierzObr<3> turn(M_PI/2, "OZ");
     Wektor<3> shift={2,2,0.75};
@@ -77,15 +79,14 @@ bool Drone::eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api){
 
 void Drone::land(){
 
-    const double half_of_height=0.5;
-    double deltaH= frame.getMiddle()[2]-half_of_height;
+    double deltaH= frame.getMiddle()[2]-HALF_HEIGHT;
     this->flyHoriz(-deltaH);
 }
 
 void Drone::moveRotors(){
 
-    MacierzObr<3> turn1((M_PI*20)/180, "OZ"),
-     turn2(-(M_PI*20)/180, "OZ");
+    MacierzObr<3> turn1((M_PI*20)/180, "OZ");
+    MacierzObr<3> turn2(-(M_PI*20)/180, "OZ");
     rotors[0].rotateSys(turn1);
     rotors[1].rotateSys(turn2);
     rotors[2].rotateSys(turn1);
@@ -129,4 +130,12 @@ void Drone::animatedFly(double angle_deg, double height, double distance, std::s
         this->draw(api);
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
+}
+
+Wektor<2> Drone::getCoord() const{
+
+    Wektor<2> middle2D;
+    middle2D[0]=frame.getMiddle()[0];
+    middle2D[1]=frame.getMiddle()[1];
+    return middle2D;
 }

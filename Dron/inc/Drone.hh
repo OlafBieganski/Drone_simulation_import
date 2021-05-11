@@ -24,6 +24,7 @@ class Drone: public CoordinateSys {
     Drone(Wektor<3> droneMiddle);
     bool eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api);
     void animatedFly(double angle_deg, double height, double distance, std::shared_ptr<drawNS::Draw3DAPI> api);
+    Wektor<2> getCoord() const;
 };
 
 

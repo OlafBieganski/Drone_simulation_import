@@ -15,9 +15,10 @@ using std::array;
 
 void menu(){
     cout<<endl;
-    cout<<"Dostepne opcje:"<<endl;
+    cout<<"Dostepne opcje:"<<endl<<endl;
     cout<<"p - zadaj parametry przelotu."<<endl;
     cout<<"w - pokaz wspolrzedne drona."<<endl;
+    cout<<"m - menu"<<endl;
     cout<<"k - koniec programu."<<endl;
     cout<<endl;
 }
@@ -35,7 +36,7 @@ void checkInput(T storagePlace){
 int main(){
 
     Surface plane;
-    std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(0,40,0,40,-1,20,0));
+    std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(0,40,0,40,0,20,0));
     Wektor<3> v1={5,5,0.5}; //startowa pozycja drona
     Drone quadcopter(v1);
 
@@ -47,27 +48,31 @@ int main(){
     char choice;
     double height, distance, angle;
     while(1){
-        cout<<endl<<"Wybierz opcje: "<<endl;
+        cout<<endl<<"Wybierz opcje: ";
         cin>>choice;
-        checkInput(choice);
         cout<<endl;
 
         switch (choice)
         {
         case 'p':
-            cout<<"Podaj kolejno wysokosc, odleglosc, i kat obrotu drona podczas lotu:"<<endl;
+            cout<<"Podaj kolejno wysokosc, odleglosc, i kat obrotu drona podczas lotu: ";
             cin>>height;
             checkInput(height);
             cin>>distance;
             checkInput(distance);
             cin>>angle;
             checkInput(angle);
-            cout<<height<<"  "<<distance<<"  "<<angle<<endl;
+            cout<<endl;
             quadcopter.animatedFly(angle,height, distance, api);
             break;
 
         case 'm':
             menu();
+            break;
+        
+        case 'w':
+            cout<<"Wspolrzedne srodka drona (x,y): ";
+            cout<<quadcopter.getCoord()<<endl<<endl;
             break;
 
         case 'k':
