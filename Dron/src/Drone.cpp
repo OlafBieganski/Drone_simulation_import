@@ -103,10 +103,12 @@ void Drone::animatedFly(double angle_deg, double height, double distance, std::s
         this->draw(api);
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
-
-    for(i=0;i<angle_deg;i++){
+    
+    double x=1;
+    if(angle_deg<0) x=-1;
+    for(i=0;i<abs(angle_deg);i++){
         this->eraseDrone(api);
-        this->turn(1);
+        this->turn(x);
         this->moveRotors();
         this->draw(api);
         std::this_thread::sleep_for(std::chrono::milliseconds(200));

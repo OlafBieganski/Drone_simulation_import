@@ -7,70 +7,78 @@
 
 
 using std::cout;
+using std::cin;
 using std::endl;
 using drawNS::APIGnuPlot3D;
 using std::array;
 
 
-void wait(){
-    {cout<<"Press an Enter to continue..."<<endl;}while(std::cin.get() != '\n');
+void menu(){
+    cout<<endl;
+    cout<<"Dostepne opcje:"<<endl;
+    cout<<"p - zadaj parametry przelotu."<<endl;
+    cout<<"w - pokaz wspolrzedne drona."<<endl;
+    cout<<"k - koniec programu."<<endl;
+    cout<<endl;
+}
+
+template<class T>
+void checkInput(T storagePlace){
+    while(!cin.good()){
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout<<"Zly format. Wprowadz dane ponownie."<<endl;
+        cin>>storagePlace;
+    }
 }
 
 int main(){
-    array<Wektor<3>, 4> points={Wektor<3>{1,1,0},Wektor<3>{1,5,0},Wektor<3>{7,5,0},Wektor<3>{7,1,0}};
-    Wektor<3> middle={1,1,3.5};
+
     Surface plane;
-    Hexagon3D prism(middle,2.5,1.0);
-    Prostopadloscian quboid(points, -3.0);
-
-    std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(0,50,0,50,0,30,0));
-
-    Wektor<3> v1={5,5,0.5}, v2={20,30,10};
+    std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(0,40,0,40,-1,20,0));
+    Wektor<3> v1={5,5,0.5}; //startowa pozycja drona
+    Drone quadcopter(v1);
 
     plane.draw(api, "yellow");
-    /*  prism.translation(v2);
-    quboid.translacja(v2);
-    prism.rotation(MacierzObr<3>(M_PI/6,"OZ"));
-    quboid.rotacja(MacierzObr<3>(M_PI/6,"OZ"));
-    prism.draw(api);
-    quboid.draw(api);*/
+    quadcopter.draw(api);
 
-    Drone quadcopter(v1);
-    quadcopter.draw(api);
-    wait();
+    menu();
 
-    quadcopter.animatedFly(83,14,21,api);
+    char choice;
+    double height, distance, angle;
+    while(1){
+        cout<<endl<<"Wybierz opcje: "<<endl;
+        cin>>choice;
+        checkInput(choice);
+        cout<<endl;
 
-    wait();
+        switch (choice)
+        {
+        case 'p':
+            cout<<"Podaj kolejno wysokosc, odleglosc, i kat obrotu drona podczas lotu:"<<endl;
+            cin>>height;
+            checkInput(height);
+            cin>>distance;
+            checkInput(distance);
+            cin>>angle;
+            checkInput(angle);
+            cout<<height<<"  "<<distance<<"  "<<angle<<endl;
+            quadcopter.animatedFly(angle,height, distance, api);
+            break;
 
-    /*quadcopter.eraseDrone(api);
-    quadcopter.flyHoriz(10);
-    quadcopter.draw(api);
-    wait();
-    quadcopter.eraseDrone(api);
-    quadcopter.turn(45);
-    quadcopter.draw(api);
-    wait();
-    quadcopter.eraseDrone(api);
-    quadcopter.flyVert(10);
-    quadcopter.draw(api);
-    wait();
-    quadcopter.eraseDrone(api);
-    quadcopter.flyVert(20);
-    quadcopter.draw(api);
-    wait();
-    quadcopter.eraseDrone(api);
-    quadcopter.turn(100);
-    quadcopter.draw(api);
-    wait();
-    quadcopter.eraseDrone(api);
-    quadcopter.flyVert(17);
-    quadcopter.draw(api);
-    wait();
-    quadcopter.eraseDrone(api);
-    quadcopter.land();
-    quadcopter.draw(api);
-    wait();*/
+        case 'm':
+            menu();
+            break;
+
+        case 'k':
+            return 0;
+        
+        default:
+            cout<<"Nierozpoznana opcja."<<endl<<endl;
+            break;
+        }
+    }
+
     
     return 0;
 }
