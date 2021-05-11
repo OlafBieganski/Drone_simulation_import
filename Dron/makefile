@@ -4,14 +4,14 @@ FLAGS=-Wall -pedantic
 __start__:DronSymulacja
 	./DronSymulacja
 
-DronSymulacja: obj obj/trial.o obj/Dr3D_gnuplot_api.o obj/Prostopadloscian.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o
-	g++ ${FLAGS} -o DronSymulacja obj/trial.o obj/Prostopadloscian.o obj/Dr3D_gnuplot_api.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o -lpthread
+DronSymulacja: obj obj/main.o obj/Dr3D_gnuplot_api.o obj/Prostopadloscian.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o
+	g++ ${FLAGS} -o DronSymulacja obj/main.o obj/Prostopadloscian.o obj/Dr3D_gnuplot_api.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o -lpthread
 
 obj:
 	mkdir obj
 
-obj/trial.o: src/trial.cpp inc/Wektor.hh inc/MacierzObr.hh inc/Prostopadloscian.hh API/source/Dr3D_gnuplot_api.hh inc/Surface.hh inc/Hexagon3D.hh
-	g++ -c ${FLAGS} -o obj/trial.o src/trial.cpp 
+obj/main.o: src/main.cpp inc/Wektor.hh inc/MacierzObr.hh inc/Prostopadloscian.hh API/source/Dr3D_gnuplot_api.hh inc/Surface.hh inc/Hexagon3D.hh
+	g++ -c ${FLAGS} -o obj/main.o src/main.cpp 
 
 obj/Dr3D_gnuplot_api.o: API/source/Dr3D_gnuplot_api.cpp API/source/Dr3D_gnuplot_api.hh
 	g++ -c ${FLAGS} -o obj/Dr3D_gnuplot_api.o API/source/Dr3D_gnuplot_api.cpp
