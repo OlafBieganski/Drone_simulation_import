@@ -2,6 +2,7 @@
 #define DRONE
 
 #include "Prostopadloscian.hh"
+#include "DrawingInterface.hh"
 #include "Hexagon3D.hh"
 #include "CoordinateSys.hh"
 #include <iostream>
@@ -9,21 +10,20 @@
 
 using std::array;
 
-class Drone: public CoordinateSys {
+class Drone: public CoordinateSys, public DrawingInterface {
     private:
     Prostopadloscian frame;
     array<Hexagon3D,4> rotors;
-    std::vector<int> shapeID;
     void moveRotors();
     public:
-    void draw(std::shared_ptr<drawNS::Draw3DAPI> api);
+    void draw() override;
     void flyHoriz(double height);
     void flyVert(double distance);
     void turn(double angle_deg);
     void land();
-    Drone(Wektor<3> droneMiddle);
-    bool eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api);
-    void animatedFly(double angle_deg, double height, double distance, std::shared_ptr<drawNS::Draw3DAPI> api);
+    Drone(Wektor<3> droneMiddle, std::shared_ptr<drawNS::Draw3DAPI> api, std::string color="black");
+    bool eraseDrone();
+    void animatedFly(double angle_deg, double height, double distance);
     Wektor<2> getCoord() const;
 };
 

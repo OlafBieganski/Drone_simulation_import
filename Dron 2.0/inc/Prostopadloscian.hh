@@ -1,24 +1,24 @@
 #ifndef PROSTOPADLOSCIAN_HH
 #define PROSTOPADLOSCIAN_HH
 
+#include "DrawingInterface.hh"
 #include "../API/source/Dr3D_gnuplot_api.hh"
 #include "Wektor.hh"
 #include "MacierzObr.hh"
-#include "DrawingInterface.hh"
 #include "CoordinateSys.hh"
 #include <array>
 
 
-class Prostopadloscian: public CoordinateSys, public DrawingInterface {
+class Prostopadloscian: public DrawingInterface, public CoordinateSys {
     private:
     std::array<Wektor<3>, 8> punkty;
     public:
-    Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc, Wektor<3> baseMid=Wektor<3>(),
+    Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color, Wektor<3> baseMid=Wektor<3>(),
      MacierzObr<3> baseOrient=MacierzObr<3>(), CoordinateSys *ptr_to_parent=nullptr);
     void translacja(Wektor<3> przesuniecie);
     void rotacja(MacierzObr<3> obrot);
     const Wektor<3> operator [] (unsigned int ind) const;
-    int draw(std::shared_ptr<drawNS::Draw3DAPI> api) const;
+    void draw() override;
     std::array<std::array<double,4>,3> dlugoscKrawedzi() const;
     Prostopadloscian(): CoordinateSys() {punkty.fill(Wektor<3>());}; // konstruktor potrzebny w klasie dron
     void setCoord(Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent)

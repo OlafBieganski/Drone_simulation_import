@@ -13,9 +13,15 @@ template<unsigned int R>
 class Wektor {
   private:
   std::vector<double> tab;
+  inline static unsigned int quanNow=0;
+  inline static unsigned int quanSum=0;
   public:
-  Wektor(){for(unsigned int i=0;i<R;++i) tab.push_back(0.0);};
-  Wektor(std::initializer_list<double> l): tab(l) {}
+  static uint get_Sum() {return quanSum;}
+  static uint get_Now() {return quanNow;}
+  ~Wektor() {quanNow--;}
+  Wektor() {for(unsigned int i=0;i<R;++i) tab.push_back(0.0);quanNow++;quanSum++;}
+  Wektor(std::initializer_list<double> l): tab(l) {quanNow++;quanSum++;}
+  Wektor(const Wektor<R> & newVec) {*this=newVec;quanNow++;quanSum++;}
   Wektor<R> operator + (const Wektor<R> & arg2) const;
   Wektor<R> operator - (const Wektor<R> & arg2) const;
   double operator * (const Wektor<R> & arg2) const;
@@ -25,11 +31,11 @@ class Wektor {
   bool operator == (const Wektor<R> & arg2) const;
   bool operator != (const Wektor<R> & arg2) const;
   double modul() const;
-  Wektor<R> crossProduct(const Wektor<R> & v1, const Wektor<R> & v2);
+  Wektor<R> crossProduct(const Wektor<R> & v2);
 };
 
 template<unsigned int R>
-Wektor<R> Wektor<R>::crossProduct(const Wektor<R> & v1, const Wektor<R> & v2){
+Wektor<R> Wektor<R>::crossProduct(const Wektor<R> & v2){
     if(R!=3){
         std::cerr<<"Iloczyn wektorowy dostepny tylko dla 3D"<<std::endl;
         exit(1);

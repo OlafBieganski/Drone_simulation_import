@@ -7,7 +7,7 @@
 using std::vector;
 using drawNS::Point3D;
 
-void Surface::draw(std::shared_ptr<drawNS::Draw3DAPI> api, std::string color) const{
+void Surface::draw(){
     vector<vector<Point3D>> pointsCollection;
     vector<Point3D> points;
     
@@ -29,5 +29,5 @@ void Surface::draw(std::shared_ptr<drawNS::Draw3DAPI> api, std::string color) co
         pointsCollection.push_back(points);
     }
 
-    api->draw_surface(pointsCollection, color);
+    shapeID.push_back(api->draw_surface(pointsCollection, color));
 }

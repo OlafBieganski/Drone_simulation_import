@@ -13,10 +13,10 @@ class Hexagon3D:public DrawingInterface, public CoordinateSys {
     void translation(Wektor<3> shift);
     void rotation(MacierzObr<3> rotationMatrix);
     const Wektor<3> operator [] (unsigned int ind) const;
-    int draw(std::shared_ptr<drawNS::Draw3DAPI> api) const;
-    Hexagon3D(std::array<Wektor<3>,6> base, double height, Wektor<3> baseMid=Wektor<3>(),
+    void draw() override;
+    Hexagon3D(std::array<Wektor<3>,6> base, double height, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color, Wektor<3> baseMid=Wektor<3>(),
      MacierzObr<3> baseOrient=MacierzObr<3>(), CoordinateSys *ptr_to_parent=nullptr);
-    Hexagon3D(Wektor<3> middle, double diagonal, double height);
+    Hexagon3D(Wektor<3> middle, double diagonal, double height, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color);
     Hexagon3D();
     void setCoord(Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent)
     {parent=ptr_to_parent;middle=baseMid;orientation=baseOrient;}

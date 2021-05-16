@@ -8,12 +8,12 @@
 using std::array;
 
 
-// nalezy podac srodek drona
-Drone::Drone(Wektor<3> droneMiddle){
+// nalezy podac srodek drona, wskaznik do api, opcjonalnie kolor
+Drone::Drone(Wektor<3> droneMiddle, std::shared_ptr<drawNS::Draw3DAPI> api, std::string color): DrawingInterface(api,color) {
 
-    Prostopadloscian body(array<Wektor<3>,4>{{Wektor<3>{2,2,-0.5},Wektor<3>{2,-2,-0.5},Wektor<3>{-2,-2,-0.5},Wektor<3>{-2,2,-0.5}}},-1);
+    Prostopadloscian body(array<Wektor<3>,4>{{Wektor<3>{2,2,-0.5},Wektor<3>{2,-2,-0.5},Wektor<3>{-2,-2,-0.5},Wektor<3>{-2,2,-0.5}}},-1,api,color);
 
-    Hexagon3D proppeler(Wektor<3>(),3,0.5);
+    Hexagon3D proppeler(Wektor<3>(),3,0.5, api, color);
     
     for(int i=0;i<ROTORSQUAN;i++) rotors[i]=proppeler;
     frame=body;
@@ -31,7 +31,7 @@ Drone::Drone(Wektor<3> droneMiddle){
 }
 
 
-void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api){
+void Drone::draw(){
     
     Prostopadloscian newFrame=frame.convert_to_parent();
     array<Hexagon3D, 4> newRotors;
@@ -39,10 +39,11 @@ void Drone::draw(std::shared_ptr<drawNS::Draw3DAPI> api){
     for(int i=0;i<ROTORSQUAN;i++){
         newRotors[i]=rotors[i].convert_to_granpa();
     }
-
-    shapeID.push_back(newFrame.draw(api));
+    newFrame.draw();
+    frame.pushBackID(newFrame.getID(0));
     for(int i=0;i<ROTORSQUAN;i++){
-        shapeID.push_back(newRotors[i].draw(api));
+        newRotors[i].draw();  // problem tutaj, trzeba przekazac id
+        rotors[i].pushBackID(newRotors[i].getID(0));
     }
     
 }
@@ -67,14 +68,14 @@ void Drone::turn(double angle_deg){
     frame.rotateSys(turn);
 }
 
-bool Drone::eraseDrone(std::shared_ptr<drawNS::Draw3DAPI> api){
+bool Drone::eraseDrone(){
     
-    if(shapeID.empty()==true) return false;
-    for(int i=0;i<5;i++){
-        api->erase_shape(shapeID[i]);
-    }
-    for(int i=0;i<5;i++) shapeID.pop_back();
-    return true;
+if(frame.emptyID()) return false;
+api->erase_shape(frame.getID(0));
+frame.popBackID();
+for(int i=0;i<4;i++) api->erase_shape(rotors[i].getID(0));
+for(int i=0;i<4;i++) rotors[i].popBackID();
+return true;
 }
 
 void Drone::land(){
@@ -93,41 +94,41 @@ void Drone::moveRotors(){
     rotors[3].rotateSys(turn2);
 }
 
-void Drone::animatedFly(double angle_deg, double height, double distance, std::shared_ptr<drawNS::Draw3DAPI> api){
+void Drone::animatedFly(double angle_deg, double height, double distance){
 
     int i;
 
     for(i=0;i<height*10;i++){
-        this->eraseDrone(api);
+        this->eraseDrone();
         this->flyHoriz(0.1);
         this->moveRotors();
-        this->draw(api);
+        this->draw();
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
     
     double x=1;
     if(angle_deg<0) x=-1;
     for(i=0;i<abs(angle_deg);i++){
-        this->eraseDrone(api);
+        this->eraseDrone();
         this->turn(x);
         this->moveRotors();
-        this->draw(api);
+        this->draw();
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
     for(i=0;i<distance*10;i++){
-        this->eraseDrone(api);
+        this->eraseDrone();
         this->flyVert(0.1);
         this->moveRotors();
-        this->draw(api);
+        this->draw();
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
     for(i=0;i<height*10;i++){
-        this->eraseDrone(api);
+        this->eraseDrone();
         this->flyHoriz(-0.1);
         this->moveRotors();
-        this->draw(api);
+        this->draw();
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 }

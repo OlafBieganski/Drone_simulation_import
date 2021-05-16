@@ -10,7 +10,9 @@ drawNS::Point3D convertPoint(Wektor<3> punkt){
 }
 
 
-Hexagon3D::Hexagon3D(Wektor<3> middle, double diagonal, double height): CoordinateSys() {
+Hexagon3D::Hexagon3D(Wektor<3> middle, double diagonal, double height, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color): DrawingInterface(_api,_color),
+ CoordinateSys() 
+{
 
     MacierzObr<3> turn((M_PI/3.0), "OZ");
     Wektor<3> v1={0,0,1}, v2={1,0,0};
@@ -39,8 +41,8 @@ Hexagon3D::Hexagon3D(): CoordinateSys() {
     }
 }
 
-Hexagon3D::Hexagon3D(std::array<Wektor<3>,6> base, double height, Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent)
-: CoordinateSys(baseMid,baseOrient,ptr_to_parent) {
+Hexagon3D::Hexagon3D(std::array<Wektor<3>,6> base, double height, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color, Wektor<3> baseMid, MacierzObr<3> baseOrient, CoordinateSys *ptr_to_parent)
+: DrawingInterface(_api,_color), CoordinateSys(baseMid,baseOrient,ptr_to_parent) {
 
     int i;
     std::array<double,3> diagonals;
@@ -102,7 +104,7 @@ const Wektor<3> Hexagon3D::operator [] (unsigned int ind) const{
 }
 
 
-int Hexagon3D::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
+void Hexagon3D::draw(){
 
     vector<vector<drawNS::Point3D>> drawingSet;
     vector<drawNS::Point3D> set1, set2;
@@ -116,7 +118,7 @@ int Hexagon3D::draw(std::shared_ptr<drawNS::Draw3DAPI> api) const{
     drawingSet.push_back(set1);
     drawingSet.push_back(set2);
 
-    return api->draw_polyhedron(drawingSet);
+    shapeID.push_back(api->draw_polyhedron(drawingSet, color));
 }
 
 
@@ -139,6 +141,9 @@ Hexagon3D Hexagon3D::convert_to_parent() const{
     converted.middle=this->parent->getMiddle();
     converted.orientation=this->parent->getOrient();
     converted.parent=this->parent->getParent();
+    converted.shapeID=this->shapeID;
+    converted.color=this->color;
+    converted.api=this->api;
 
     for(int i=0;i<12;i++){
         converted.verticies[i]=(this->orientation*this->verticies[i])+this->middle;
