@@ -4,8 +4,8 @@ FLAGS=-Wall -pedantic -std=c++17
 __start__:DronSymulacja
 	./DronSymulacja
 
-DronSymulacja: obj obj/main.o obj/Dr3D_gnuplot_api.o obj/Prostopadloscian.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o obj/Scene.o
-	g++ -g ${FLAGS} -o DronSymulacja obj/main.o obj/Prostopadloscian.o obj/Dr3D_gnuplot_api.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o obj/Scene.o -lpthread
+DronSymulacja: obj obj/main.o obj/Dr3D_gnuplot_api.o obj/Prostopadloscian.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o obj/Scene.o obj/Hill.o obj/Plateau_Cuboid.o obj/Plateau.o
+	g++ -g ${FLAGS} -o DronSymulacja obj/main.o obj/Prostopadloscian.o obj/Dr3D_gnuplot_api.o obj/Surface.o obj/CoordinateSys.o obj/DrawingInterface.o obj/Hexagon3D.o obj/Drone.o obj/Scene.o obj/Hill.o obj/Plateau_Cuboid.o obj/Plateau.o -lpthread
 
 obj:
 	mkdir obj
