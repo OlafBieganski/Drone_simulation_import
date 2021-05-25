@@ -10,7 +10,7 @@
 
 
 class Prostopadloscian: public DrawingInterface, public CoordinateSys {
-    private:
+    protected:
     std::array<Wektor<3>, 8> punkty;
     public:
     Prostopadloscian(std::array<Wektor<3>, 4> podstawa, double wysokosc, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color, Wektor<3> baseMid=Wektor<3>(),
