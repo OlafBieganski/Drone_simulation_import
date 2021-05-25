@@ -22,7 +22,7 @@ class Drone: public CoordinateSys, public DrawingInterface {
     void turn(double angle_deg);
     void land();
     Drone(Wektor<3> droneMiddle, std::shared_ptr<drawNS::Draw3DAPI> api, std::string color="black");
-    bool eraseDrone();
+    void eraseDrone();
     void animatedFly(double angle_deg, double height, double distance);
     Wektor<2> getCoord() const;
 };

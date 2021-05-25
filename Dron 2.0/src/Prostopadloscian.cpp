@@ -49,7 +49,7 @@ void Prostopadloscian::draw(){
     pointsCollection.push_back(points1);
     pointsCollection.push_back(points2);
     //rysujemy glowny ksztalt
-    shapeID.push_back(api->draw_polyhedron(pointsCollection, color));
+    shapeID=api->draw_polyhedron(pointsCollection, color);
 }
 
 

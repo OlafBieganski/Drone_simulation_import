@@ -118,7 +118,7 @@ void Hexagon3D::draw(){
     drawingSet.push_back(set1);
     drawingSet.push_back(set2);
 
-    shapeID.push_back(api->draw_polyhedron(drawingSet, color));
+    shapeID=api->draw_polyhedron(drawingSet, color);
 }
 
 

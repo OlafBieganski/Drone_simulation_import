@@ -36,7 +36,6 @@ void checkInput(T storagePlace){
 void drawAll(std::vector<DrawingInterface*> objects){
     for(DrawingInterface* & x: objects){
         x->draw();
-        cout<<"Drawing successful."<<endl;
     }
 }
 
@@ -58,7 +57,7 @@ int main(){
 
   /*  plane.draw();
     quadcopter.draw();
-    obstacle1.draw();*/
+    obstacle1.draw(); */
 
     menu();
 

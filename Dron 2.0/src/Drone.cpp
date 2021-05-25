@@ -40,10 +40,10 @@ void Drone::draw(){
         newRotors[i]=rotors[i].convert_to_granpa();
     }
     newFrame.draw();
-    frame.pushBackID(newFrame.getID(0));
+    frame.setID(newFrame.getID());
     for(int i=0;i<ROTORSQUAN;i++){
-        newRotors[i].draw();  // problem tutaj, trzeba przekazac id
-        rotors[i].pushBackID(newRotors[i].getID(0));
+        newRotors[i].draw();  
+        rotors[i].setID(newRotors[i].getID());
     }
     
 }
@@ -68,14 +68,10 @@ void Drone::turn(double angle_deg){
     frame.rotateSys(turn);
 }
 
-bool Drone::eraseDrone(){
+void Drone::eraseDrone(){
     
-if(frame.emptyID()) return false;
-api->erase_shape(frame.getID(0));
-frame.popBackID();
-for(int i=0;i<4;i++) api->erase_shape(rotors[i].getID(0));
-for(int i=0;i<4;i++) rotors[i].popBackID();
-return true;
+api->erase_shape(frame.getID());
+for(int i=0;i<4;i++) api->erase_shape(rotors[i].getID());
 }
 
 void Drone::land(){

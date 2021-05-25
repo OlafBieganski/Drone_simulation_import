@@ -29,5 +29,5 @@ void Surface::draw(){
         pointsCollection.push_back(points);
     }
 
-    shapeID.push_back(api->draw_surface(pointsCollection, color));
+    shapeID=api->draw_surface(pointsCollection, color);
 }
