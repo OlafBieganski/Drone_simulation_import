@@ -44,8 +44,8 @@ int main(){
     quadcopter.draw();
 
     Scene landscape(api);
-    landscape.add_LS_item("Plateau");
-    landscape.add_LS_item("PlateauC");
+    //landscape.add_LS_item("Plateau");
+   // landscape.add_LS_item("PlateauC");
     landscape.add_LS_item("Hill");
     landscape.drawAll();
 

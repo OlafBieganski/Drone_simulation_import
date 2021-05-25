@@ -10,7 +10,7 @@ void Scene::drawAll(){
     }
 }
 
-uint Scene::add_LS_item(std::string name){
+long int Scene::add_LS_item(std::string name){
     if(name=="Plateau"){
         Wektor<2> location;
         std::string color;
@@ -21,9 +21,9 @@ uint Scene::add_LS_item(std::string name){
         cin>>color;
         cout<<"Podaj ilosc katow wielokata: "<<endl;
         cin>>vertNr;
-        Plateau p(location,vertNr,api,color);
+        static Plateau p(location,vertNr,api,color); // czy tak jest ok?
         toDraw.push_back(&p);
-        return (uint)&p; // zwaracamy id obiektu
+        return (long int)&p; // zwaracamy id obiektu
     }
     if(name=="PlateauC"){
         Wektor<2> location;
@@ -39,9 +39,9 @@ uint Scene::add_LS_item(std::string name){
         cin>>w;
         cout<<"Podaj dlugosc (OY): "<<endl;
         cin>>l;
-        Plateau_Cuboid pC(location,h,w,l,api,color);
+        static Plateau_Cuboid pC(location,h,w,l,api,color);
         toDraw.push_back(&pC);
-        return (uint)&pC; // zwaracamy id obiektu
+        return (long int)&pC; // zwaracamy id obiektu
     }
     if(name=="Hill"){
         Wektor<2> location;
@@ -53,17 +53,17 @@ uint Scene::add_LS_item(std::string name){
         cin>>color;
         cout<<"Podaj ilosc katow wielokata: "<<endl;
         cin>>vertNr;
-        Hill h(location,vertNr,api,color);
+        static Hill h(location,vertNr,api,color);
         toDraw.push_back(&h);
-        return (uint)&h; // zwaracamy id obiektu
+        return (long int)&h; // zwaracamy id obiektu
     }
     std::cerr<<"Blad: nie mozna stworzyc takiego elementu."<<endl;
     exit(1);
 }
 
-void Scene::rm_LS_item(uint id){
+void Scene::rm_LS_item(long int id){
     for(auto it = toDraw.begin(); it != toDraw.end();){
-        if((uint)(*it)==id){ // sprawdzamy czy id, ktore jest adresem zgadza sie z aktualnie sprawdzanym
+        if((long int)(*it)==id){ // sprawdzamy czy id, ktore jest adresem zgadza sie z aktualnie sprawdzanym
             api->erase_shape((*it)->getID());
             it=toDraw.erase(it);
         }

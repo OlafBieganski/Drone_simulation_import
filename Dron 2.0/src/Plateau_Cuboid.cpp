@@ -8,8 +8,8 @@ Plateau_Cuboid::Plateau_Cuboid(Wektor<2> location, double heightZ, double widthX
 
     punkty[0]=mid+v1;
     punkty[1]=mid+v2;
-    punkty[2]=mid+v3;
-    punkty[3]=mid+v4;
+    punkty[2]=mid+v4;
+    punkty[3]=mid+v3;
     for(int i=0;i<4;i++) punkty[i+4]=punkty[i]+h;
     api=_api;
     color=_color;
