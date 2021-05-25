@@ -12,6 +12,7 @@ class Scene{
     list<LandscapeInterface*> landscapeItem;
     std::shared_ptr<drawNS::Draw3DAPI> api;
     public:
+    // parametry: api
     Scene(std::shared_ptr<drawNS::Draw3DAPI> _api): api(_api) {}
     void drawAll();
     uint add_LS_item(std::string name); // name -> PlateauC, Plateau, Hill

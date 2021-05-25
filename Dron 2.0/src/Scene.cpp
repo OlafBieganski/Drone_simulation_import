@@ -28,7 +28,6 @@ uint Scene::add_LS_item(std::string name){
     if(name=="PlateauC"){
         Wektor<2> location;
         std::string color;
-        uint vertNr;
         double h,l,w;
         cout<<"Podaj wspolrzedne obiektu (x,y): "<<endl;
         cin>>location;
@@ -58,6 +57,8 @@ uint Scene::add_LS_item(std::string name){
         toDraw.push_back(&h);
         return (uint)&h; // zwaracamy id obiektu
     }
+    std::cerr<<"Blad: nie mozna stworzyc takiego elementu."<<endl;
+    exit(1);
 }
 
 void Scene::rm_LS_item(uint id){

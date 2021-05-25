@@ -4,6 +4,7 @@
 #include "../inc/Hexagon3D.hh"
 #include "../inc/Prostopadloscian.hh"
 #include "../inc/Drone.hh"
+#include "../inc/Scene.hh"
 
 
 using std::cout;
@@ -33,31 +34,20 @@ void checkInput(T storagePlace){
     }
 }
 
-void drawAll(std::vector<DrawingInterface*> objects){
-    for(DrawingInterface* & x: objects){
-        x->draw();
-    }
-}
-
 int main(){
 
     std::shared_ptr<drawNS::Draw3DAPI> api(new APIGnuPlot3D(0,40,0,40,0,20,0));
     Surface plane(0,api,"yellow");
     Wektor<3> v1={5,5,0.5}; //startowa pozycja drona
     Drone quadcopter(v1,api,"red");
-    Prostopadloscian obstacle1(std::array<Wektor<3>,4>{{Wektor<3>{4,8,0},Wektor<3>{8,8,0},Wektor<3>{8,12,0},Wektor<3>{4,12,0}}},5,api,"yellow");
-    Wektor<3> v2={10,17,0};
-    obstacle1.translacja(v2);
-
-    std::vector<DrawingInterface*> objects;
-    objects.push_back(&plane);
-    objects.push_back(&quadcopter);
-    objects.push_back(&obstacle1);
-    drawAll(objects);
-
-  /*  plane.draw();
+    plane.draw();
     quadcopter.draw();
-    obstacle1.draw(); */
+
+    Scene landscape(api);
+    landscape.add_LS_item("Plateau");
+    landscape.add_LS_item("PlateauC");
+    landscape.add_LS_item("Hill");
+    landscape.drawAll();
 
     menu();
 
