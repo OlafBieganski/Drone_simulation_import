@@ -10,7 +10,7 @@ class Hill: public DrawingInterface, public CoordinateSys {
     uint vertNr; // ilosc wiercholkow podstawy
     public:
     void draw() override;
-    Hill(Wektor<2> location, uint _vertNr);
+    Hill(Wektor<2> location, uint _vertNr, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color);
 };
 
 #endif

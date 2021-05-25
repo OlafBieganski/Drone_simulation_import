@@ -3,7 +3,7 @@
 using std::vector;
 using drawNS::Point3D;
 
-Plateau::Plateau(Wektor<2> location, uint _vertNr){
+Plateau::Plateau(Wektor<2> location, uint _vertNr, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color): DrawingInterface(_api,_color), CoordinateSys(){
     
     Wektor<3> location2={location[0],location[1],0};
     vertNr=_vertNr;

@@ -10,7 +10,7 @@ class Plateau: public DrawingInterface, public CoordinateSys {
     uint vertNr; // ilosc wiercholkow podstawy
     public:
     void draw() override;
-    Plateau(Wektor<2> location, uint _vertNr); // vertNr = ile katow
+    Plateau(Wektor<2> location, uint _vertNr, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color); // vertNr = ile katow
 };
 
 #endif
