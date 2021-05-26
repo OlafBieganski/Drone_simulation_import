@@ -11,6 +11,7 @@ class Hill: public DrawingInterface, public CoordinateSys {
     public:
     void draw() override;
     Hill(Wektor<2> location, uint _vertNr, std::shared_ptr<drawNS::Draw3DAPI> _api, std::string _color);
+    void showVert() const {for(uint i=0;i<=vertNr;i++) std::cout<<"Wierzcholek nr "<<i<<" = "<<verticies[i]<<std::endl;}
 };
 
 #endif

@@ -15,7 +15,7 @@ Hill::Hill(Wektor<2> location, uint _vertNr, std::shared_ptr<drawNS::Draw3DAPI> 
         verticies.push_back(location2+v);
     }
     Wektor<3> randHight={0,0,double(rand()%20+1)};
-    verticies.push_back(verticies[vertNr-1]+randHight);
+    verticies.push_back(location2+randHight);
 }
 
 drawNS::Point3D convert(Wektor<3> point){
@@ -31,7 +31,7 @@ void Hill::draw(){
         points1.push_back(convert(verticies[i]));
     }
 
-    points2.push_back(convert(verticies[vertNr]));
+    for(uint i=0;i<vertNr;i++) points2.push_back(convert(verticies[vertNr]));
 
     pointsCollection.push_back(points1);
     pointsCollection.push_back(points2);
