@@ -19,8 +19,9 @@ void menu(){
     cout<<"Dostepne opcje:"<<endl<<endl;
     cout<<"p - zadaj parametry przelotu."<<endl;
     cout<<"w - pokaz wspolrzedne drona."<<endl;
-    cout<<"m - menu"<<endl;
+    cout<<"m - menu."<<endl;
     cout<<"k - koniec programu."<<endl;
+    cout<<"d - dodaj element powierzchni."<<endl;
     cout<<endl;
 }
 
@@ -44,15 +45,19 @@ int main(){
     quadcopter.draw();
 
     Scene landscape(api);
-    //landscape.add_LS_item("Plateau");
-   // landscape.add_LS_item("PlateauC");
+    landscape.add_LS_item("Plateau");
+    landscape.add_LS_item("PlateauC");
     landscape.add_LS_item("Hill");
     landscape.drawAll();
-
+    //Wektor<2> x={20,20};
+    //Hill h(x,6,api,"red");
+    //h.showVert();
+    //h.draw();
     menu();
 
-    char choice;
+    char choice, choice2;
     double height, distance, angle;
+    std::vector<long int> IDs;
     while(1){
         cout<<endl<<"Ilosc wektorow utworzonych do tej pory: "<<Wektor<3>::get_Sum()<<endl;
         cout<<"Ilosc wektorow istniejacych aktualnie: "<<Wektor<3>::get_Now()<<endl;
@@ -63,6 +68,28 @@ int main(){
 
         switch (choice)
         {
+        case 'd':
+            cout<<"Wybierz element do dodania:"<<endl;
+            cout<<"Gora - 1"<<endl;
+            cout<<"Plaskowyz - 2"<<endl;
+            cout<<"Plaskowyz Prostopadloscienny - 3"<<endl;
+            cin>>choice2;
+            switch (choice2)
+            {
+            case '1':
+                landscape.add_LS_item("Hill");
+                break;
+            case '2':
+                landscape.add_LS_item("Plateau");
+                break;
+            case '3':
+                landscape.add_LS_item("PlateauC");
+                break;
+            default:
+                break;
+            }
+            break;
+
         case 'p':
             cout<<"Podaj kolejno wysokosc, odleglosc, i kat obrotu drona podczas lotu: ";
             cin>>height;
