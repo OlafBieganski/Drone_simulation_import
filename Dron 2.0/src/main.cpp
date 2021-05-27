@@ -45,10 +45,10 @@ int main(){
     quadcopter.draw();
 
     Scene landscape(api);
-    landscape.add_LS_item("Plateau");
-    landscape.add_LS_item("PlateauC");
-    landscape.add_LS_item("Hill");
-    landscape.drawAll();
+    //landscape.add_LS_item("Plateau");
+    //landscape.add_LS_item("PlateauC");
+    //landscape.add_LS_item("Hill");
+    //landscape.drawAll();
     //Wektor<2> x={20,20};
     //Hill h(x,6,api,"red");
     //h.showVert();
@@ -78,9 +78,11 @@ int main(){
             {
             case '1':
                 landscape.add_LS_item("Hill");
+                cout<<"check1"<<endl;
                 break;
             case '2':
                 landscape.add_LS_item("Plateau");
+                cout<<"check2"<<endl;
                 break;
             case '3':
                 landscape.add_LS_item("PlateauC");
@@ -88,7 +90,9 @@ int main(){
             default:
                 break;
             }
+            landscape.drawAll();
             break;
+            
 
         case 'p':
             cout<<"Podaj kolejno wysokosc, odleglosc, i kat obrotu drona podczas lotu: ";

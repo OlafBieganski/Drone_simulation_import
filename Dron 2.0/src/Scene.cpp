@@ -21,9 +21,9 @@ long int Scene::add_LS_item(std::string name){
         cin>>color;
         cout<<"Podaj ilosc katow wielokata: "<<endl;
         cin>>vertNr;
-        static Plateau p(location,vertNr,api,color); // czy tak jest ok?
-        toDraw.push_back(&p);
-        return (long int)&p; // zwaracamy id obiektu
+        Plateau* p= new Plateau(location,vertNr,api,color); // czy tak jest ok?
+        toDraw.push_back(p);
+        return (long int)p; // zwaracamy id obiektu
     }
     if(name=="PlateauC"){
         Wektor<2> location;
@@ -39,9 +39,9 @@ long int Scene::add_LS_item(std::string name){
         cin>>w;
         cout<<"Podaj dlugosc (OY): "<<endl;
         cin>>l;
-        static Plateau_Cuboid pC(location,h,w,l,api,color);
-        toDraw.push_back(&pC);
-        return (long int)&pC; // zwaracamy id obiektu
+        Plateau_Cuboid* pC = new Plateau_Cuboid(location,h,w,l,api,color);
+        toDraw.push_back(pC);
+        return (long int)pC; // zwaracamy id obiektu
     }
     if(name=="Hill"){
         Wektor<2> location;
@@ -53,9 +53,9 @@ long int Scene::add_LS_item(std::string name){
         cin>>color;
         cout<<"Podaj ilosc katow wielokata: "<<endl;
         cin>>vertNr;
-        static Hill h(location,vertNr,api,color);
-        toDraw.push_back(&h);
-        return (long int)&h; // zwaracamy id obiektu
+        Hill* h = new Hill(location,vertNr,api,color);
+        toDraw.push_back(h);
+        return (long int)h; // zwaracamy id obiektu
     }
     std::cerr<<"Blad: nie mozna stworzyc takiego elementu."<<endl;
     exit(1);
