@@ -15,6 +15,7 @@ class Scene{
     // parametry: api
     Scene(std::shared_ptr<drawNS::Draw3DAPI> _api): api(_api) {}
     void drawAll();
-    long int add_LS_item(std::string name); // name -> PlateauC, Plateau, Hill
+    long int add_LS_item(std::string name, Wektor<2> location); // name -> PlateauC, Plateau, Hill
     void rm_LS_item(long int id);
+    void listObjects() const;
 };
