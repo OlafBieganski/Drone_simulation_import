@@ -56,9 +56,13 @@ long int Scene::add_LS_item(std::string name, Wektor<2> location){
 
 void Scene::rm_LS_item(long int id){
     for(auto it = toDraw.begin(); it != toDraw.end();){
+        cout<<"ID: "<<id<<endl;
+        cout<<"Adres realny: "<<(long int)*it<<endl;
         if((long int)(*it)==id){ // sprawdzamy czy id, ktore jest adresem zgadza sie z aktualnie sprawdzanym
+            cout<<"shapeID obiektu"<<(*it)->getID()<<endl;
             api->erase_shape((*it)->getID());
-            it=toDraw.erase(it);
+            toDraw.erase(it);
+            it=toDraw.end();
         }
         else{
             ++it;

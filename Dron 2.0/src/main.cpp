@@ -15,14 +15,14 @@ using std::array;
 
 
 void listElems(std::vector<long int> IDs, std::vector<std::string> names, std::vector<Wektor<2>> place){
+    
     if(IDs.empty()==false){
-        int i=0;
-        for(auto x : IDs){
+        for(uint i=0;i<IDs.size();i++){
             cout<<i+1<<". "<<names[i]
             <<"  "<<place[i]<<endl;
-            i++;
         }
-    }else{
+    }
+    else{
         cout<<"Brak obiektow"<<endl;
     }
 }
