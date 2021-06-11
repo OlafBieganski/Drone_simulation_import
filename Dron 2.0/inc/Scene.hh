@@ -18,4 +18,5 @@ class Scene{
     long int add_LS_item(std::string name, Wektor<2> location); // name -> PlateauC, Plateau, Hill
     void rm_LS_item(long int id);
     void listObjects() const;
+    void eraseAll();
 };

@@ -55,8 +55,8 @@ int main(){
     Surface plane(0,api,"yellow");
     Wektor<3> v1={5,5,0.5}; //startowa pozycja drona
     Drone quadcopter(v1,api,"red");
-    plane.draw();
     quadcopter.draw();
+    plane.draw();
 
     Scene landscape(api);
     //landscape.add_LS_item("Plateau");
@@ -132,6 +132,7 @@ int main(){
             default:
                 break;
             }
+            landscape.eraseAll();
             landscape.drawAll();
             break;
             

@@ -5,7 +5,7 @@
 
 class DrawingInterface{
     protected:
-    uint shapeID;
+    uint shapeID=1000; // patrz NOTDRAWN w Scene.cpp
     std::shared_ptr<drawNS::Draw3DAPI> api;
     std::string color="black";
     public:

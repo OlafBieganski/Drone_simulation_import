@@ -4,11 +4,19 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-
+#define NOTDRAWN 10000 // jezli obiekt nie narysowany przyjmuje ta wartosc
 
 void Scene::drawAll(){
     for(DrawingInterface* & x: toDraw){
         x->draw();
+    }
+}
+
+void Scene::eraseAll(){
+    for(DrawingInterface* & x: toDraw){
+        if(x->getID()!=NOTDRAWN){
+            api->erase_shape(x->getID());
+        }
     }
 }
 
@@ -56,10 +64,7 @@ long int Scene::add_LS_item(std::string name, Wektor<2> location){
 
 void Scene::rm_LS_item(long int id){
     for(auto it = toDraw.begin(); it != toDraw.end();){
-        cout<<"ID: "<<id<<endl;
-        cout<<"Adres realny: "<<(long int)*it<<endl;
         if((long int)(*it)==id){ // sprawdzamy czy id, ktore jest adresem zgadza sie z aktualnie sprawdzanym
-            cout<<"shapeID obiektu"<<(*it)->getID()<<endl;
             api->erase_shape((*it)->getID());
             toDraw.erase(it);
             it=toDraw.end();
@@ -68,4 +73,11 @@ void Scene::rm_LS_item(long int id){
             ++it;
         }
     }
+}
+
+void Scene::listObjects() const {
+    for(DrawingInterface* x: toDraw){
+        cout<<"ShapeID: "<<x->getID()<<endl;
+    }
+    cout<<"Listing procedure finished"<<endl;
 }
